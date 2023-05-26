@@ -1,0 +1,33 @@
+.wrapper {
+    padding-top: 70px;
+    padding-bottom: 20px;
+    width: 185px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 100;
+    background-color: var(--dark_blue);
+
+    .menu {
+
+        .item {
+            padding: 12px 30px;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            transition: all .3s ease;
+            color: #fff;
+
+            &:hover {
+                background-color: var(--menu_active);
+            }
+        }
+
+        .item.active {
+            background-color: var(--menu_active);
+        }
+    }
+}
