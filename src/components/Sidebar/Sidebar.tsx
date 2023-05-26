@@ -16,10 +16,10 @@ const menuList = [
         label: 'Архив',
         url: '/archive'
     },
-    {
-        label: 'Отчеты',
-        url: '/reports'
-    },
+    // {
+    //     label: 'Отчеты',
+    //     url: '/reports'
+    // },
     {
         label: 'Сотрудники',
         url: '/employees'
