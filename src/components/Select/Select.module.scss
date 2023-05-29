@@ -1,0 +1,11 @@
+.wrapper {
+    overflow: hidden;
+    .label {
+        font-size: 12px;
+        line-height: 16px;
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+    }
+}

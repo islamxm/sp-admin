@@ -1,0 +1,32 @@
+.wrapper {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 11px;
+    transition: all .3s ease;
+    font-size: 15px;
+    line-height: 20px;
+
+    &:hover {
+        opacity: .7;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.wrapper.blue {
+    background-color: var(--blue);
+}
+
+.wrapper.danger {
+    background-color: var(--red);
+}
+
+.wrapper.round {
+    border-radius: 20px;
+}
