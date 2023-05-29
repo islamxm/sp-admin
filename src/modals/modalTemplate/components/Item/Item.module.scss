@@ -1,0 +1,48 @@
+.wrapper {
+    
+
+    position: relative;
+    
+    
+    display: flex;
+    align-items: center;
+
+    .action {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+    }
+
+
+    .body {
+        width: 100%;
+        height: 100%;
+        // border: 1px solid red;
+        padding: 5px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 38px rgba(0, 0, 0, 0.05);
+        border-radius: 11px;
+        min-height: 50px;
+        transition: all .3s ease;
+
+        &:hover {
+            box-shadow: 0px 0px 38px rgba(0, 0, 0, 0.2);
+        }
+
+        .name {
+            margin-bottom: 2px;
+        }
+    
+        .ex {
+            color: rgba(56, 56, 56, 0.5);
+            font-size: 12px;line-height: 16px;
+        }
+    }
+}

@@ -5,6 +5,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import DocsPage from '../../pages/docsPage/DocsPage';
 import TempPage from '../../pages/tempPage/TempPage';
+import EmpPage from '../../pages/empPage/EmpPage';
+import ArchPage from '../../pages/archPage/ArchPage';
 
 const App:FC = () => {
     const location = useLocation()
@@ -17,6 +19,8 @@ const App:FC = () => {
                     <Route path='/' element={<DocsPage/>}/>
                     <Route path='/documents' element={<DocsPage/>}/>
                     <Route path='/templates' element={<TempPage/>}/>
+                    <Route path='/archive' element={<ArchPage/>}/>
+                    <Route path='/employees' element={<EmpPage/>}/>
                 </Routes>
             </Layout>
         </div>

@@ -3,7 +3,7 @@ import { IButton } from './types';
 import { FC } from 'react';
 
 const Button:FC<IButton> = (props) => {
-    const {text, variant = 'blue', isRound} = props
+    const {text, variant = 'blue', isRound, fill} = props
 
     const switchVariant = () => {
         switch(variant) {
@@ -11,6 +11,8 @@ const Button:FC<IButton> = (props) => {
                 return styles.blue
             case 'danger':
                 return styles.danger
+            case 'black_bordered':
+                return styles.black_bordered
         }
     }
 
@@ -18,7 +20,7 @@ const Button:FC<IButton> = (props) => {
         <button
             {...props}
             type='button'
-            className={`${styles.wrapper} ${isRound ? styles.round : ''} ${switchVariant()}`}
+            className={`${styles.wrapper} ${isRound ? styles.round : ''} ${switchVariant()} ${fill ? styles.fill : ''}`}
             >
             {text}
         </button>
