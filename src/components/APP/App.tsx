@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 
 import DocsPage from '../../pages/docsPage/DocsPage';
-
+import TempPage from '../../pages/tempPage/TempPage';
 
 const App:FC = () => {
     const location = useLocation()
@@ -16,6 +16,7 @@ const App:FC = () => {
                 <Routes location={location} key={location.pathname}>
                     <Route path='/' element={<DocsPage/>}/>
                     <Route path='/documents' element={<DocsPage/>}/>
+                    <Route path='/templates' element={<TempPage/>}/>
                 </Routes>
             </Layout>
         </div>
