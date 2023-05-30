@@ -8,7 +8,7 @@ const Layout:FC<{children?: ReactNode}> = ({children}) => {
 
 
     return (
-        <div className={`${styles.wrapper} ${location?.pathname !== 'auth' ? styles.auth : ''}`}>
+        <div className={`${styles.wrapper} ${location?.pathname === '/auth' ? styles.auth : ''}`}>
             <Header/>
             {location?.pathname !== '/auth' && <Sidebar/>} 
             <div className={`${styles.main}`}>
