@@ -5,6 +5,12 @@ import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Select from '../../components/Select/Select';
 import Item from './components/Item/Item';
+import { useAppSelector } from '../../hooks/reduxHook';
+import ApiService from '../../service/ApiService';
+import ITemplateData from '../../models/ITemplateData';
+import { useState } from 'react';
+
+const service = new ApiService()
 
 interface I extends ModalFuncProps {
 
@@ -12,6 +18,27 @@ interface I extends ModalFuncProps {
 
 
 const ModalTemplate:FC<I> = (props) => {
+    const {mainReducer: {token}} = useAppSelector(s => s)
+
+    const [data, setData] = useState<ITemplateData | null>(null)
+
+
+
+    const addTemplate = () => {
+        if(token) {
+            const body = new FormData()
+            const data:ITemplateData = {
+                
+            }
+            service.addTemplate(body).then(res => {
+                console.log(res)
+            })
+        }
+    }
+
+    const editTemplate = () => {
+
+    }
 
 
     return (

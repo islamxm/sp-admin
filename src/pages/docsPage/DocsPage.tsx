@@ -3,6 +3,12 @@ import {Row, Col} from 'antd';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import Select from '../../components/Select/Select';
+import { useAppSelector } from '../../hooks/reduxHook';
+import { useEffect } from 'react';
+import ApiService from '../../service/ApiService';
+
+const service = new ApiService()
+
 const tableHead = [
     {
         label: 'ID',
@@ -45,6 +51,13 @@ const mockData = [
 
 
 const DocsPage = () => {
+    const {mainReducer: {token}} = useAppSelector(s => s)
+
+    useEffect(() => {
+        if(token) {
+            
+        }
+    }, [token])
 
     return (
         <div className={styles.wrapper}>
