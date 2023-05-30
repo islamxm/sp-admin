@@ -9,6 +9,20 @@
     transition: all .3s ease;
     font-size: 15px;
     line-height: 20px;
+    position: relative;
+    .load {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+
+        
+    }
 
     &:hover {
         opacity: .7;
@@ -16,6 +30,20 @@
 
     &:active {
         transform: scale(0.95);
+    }
+
+    &:disabled {
+        filter: grayscale(1);
+        opacity: .6;
+    }
+}
+
+.wrapper.loading {
+    pointer-events: none;
+    touch-action: none;
+
+    .text {
+        opacity: 0;
     }
 }
 

@@ -1,0 +1,12 @@
+.wrapper {
+    height: calc(100vh - 75px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form {
+        max-width: 370px;
+        width: 100%;
+
+    }
+}

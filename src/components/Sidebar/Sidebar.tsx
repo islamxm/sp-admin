@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import styles from './Sidebar.module.scss';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/reduxHook';
+import { main_tokenDelete } from '../../store/slices/mainSlice';
+import LOCAL_STORAGE from '../../utils/localStorage';
+import { useNavigate } from 'react-router-dom';
 const menuList = [
     {
         label: 'Документы',
@@ -28,9 +32,16 @@ const menuList = [
 
 
 const Sidebar = () => {
+    const nav = useNavigate()
     const {pathname} = useLocation()
+    const dispatch = useAppDispatch()
 
-    useEffect(() => console.log(pathname), [pathname])
+    const onLogout = () => {    
+        LOCAL_STORAGE.removeItem('sochi-park-admin-token')
+        dispatch(main_tokenDelete())
+        nav('/auth')
+    }
+
 
     return (
         <div className={styles.wrapper}>
@@ -42,6 +53,9 @@ const Sidebar = () => {
                         </Link>
                     ))
                 }
+                <div onClick={onLogout} className={styles.item}>
+                    Log out
+                </div>
             </div>
         </div>
     )

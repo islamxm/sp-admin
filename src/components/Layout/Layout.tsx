@@ -1,16 +1,17 @@
 import styles from './Layout.module.scss';
-import {FC, ReactNode} from 'react';
+import {FC, ReactNode, useEffect} from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
-
+import { useLocation } from 'react-router-dom';
 const Layout:FC<{children?: ReactNode}> = ({children}) => {
+    const location = useLocation()
 
 
     return (
-        <div className={styles.wrapper}>
+        <div className={`${styles.wrapper} ${location?.pathname !== 'auth' ? styles.auth : ''}`}>
             <Header/>
-            <Sidebar/>
-            <div className={styles.main}>
+            {location?.pathname !== '/auth' && <Sidebar/>} 
+            <div className={`${styles.main}`}>
             {children}
             </div>
         </div>

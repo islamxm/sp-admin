@@ -6,9 +6,6 @@ import { useLocation } from 'react-router-dom';
 const Header = () => {
     const location = useLocation()
 
-    useEffect(() => {
-        console.log(location)
-    }, [location])
 
     return (
         <div className={styles.wrapper}>
@@ -16,7 +13,10 @@ const Header = () => {
             <div className={styles.main}>
                 {location?.pathname?.includes('/templates') && <TempAction/>}
             </div>
-            <div className={styles.action}></div>
+            {
+                location?.pathname !== 'auth' && <div className={styles.action}></div>
+            }
+            
         </div>
     )
 }

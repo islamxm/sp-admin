@@ -1,9 +1,11 @@
+import { BeatLoader } from 'react-spinners';
 import styles from './Button.module.scss';
 import { IButton } from './types';
 import { FC } from 'react';
 
+
 const Button:FC<IButton> = (props) => {
-    const {text, variant = 'blue', isRound, fill} = props
+    const {text, variant = 'blue', isRound, fill, type = 'button', load} = props
 
     const switchVariant = () => {
         switch(variant) {
@@ -19,10 +21,10 @@ const Button:FC<IButton> = (props) => {
     return (
         <button
             {...props}
-            type='button'
-            className={`${styles.wrapper} ${isRound ? styles.round : ''} ${switchVariant()} ${fill ? styles.fill : ''}`}
+            className={`${styles.wrapper} ${isRound ? styles.round : ''} ${switchVariant()} ${fill ? styles.fill : ''} ${load ? styles.loading: ''}`}
             >
-            {text}
+            {load && <div className={styles.load}><BeatLoader color='#fff'/></div>}
+            <div className={styles.text}>{text}</div>
         </button>
     )
 }
