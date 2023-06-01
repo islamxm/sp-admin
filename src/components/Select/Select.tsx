@@ -1,10 +1,13 @@
 import styles from './Select.module.scss';
 import {Select as AntSelect} from 'antd';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { ISelect } from './types';
 
 const Select = (props:ISelect) => {
     const {label} = props
+
+
+
     return (    
         <div className={styles.wrapper}>
             {

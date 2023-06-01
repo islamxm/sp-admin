@@ -1,6 +1,10 @@
 import styles from './EmpPage.module.scss';
 import {Row, Col} from 'antd';
 import Button from '../../components/Button/Button';
+import ApiService from '../../service/ApiService';
+import { useAppSelector } from '../../hooks/reduxHook';
+import {useEffect, useState} from 'react'
+
 const tableHead = [
     {
         label: 'ID',
@@ -29,16 +33,27 @@ const tableHead = [
    
 ]
 
+const service = new ApiService()
 
-const mockData = [
-    ['100', 'Александров Виктор Денисович', 'Менеджер по продажам', 'Отдел продаж', 'Гостиничный комплекс “Богатырь”', 'Стойка регистрации', '12.03.2023 16:50', 'action'],
-    ['100', 'Александров Виктор Денисович', 'Менеджер по продажам', 'Отдел продаж', 'Гостиничный комплекс “Богатырь”', 'Стойка регистрации', '12.03.2023 16:50', 'action'],
-    ['100', 'Александров Виктор Денисович', 'Менеджер по продажам', 'Отдел продаж', 'Гостиничный комплекс “Богатырь”', 'Стойка регистрации', '12.03.2023 16:50', 'action'],
-   
-]
 
 
 const EmpPage = () => {
+    const {mainReducer: {token}} = useAppSelector(s => s)
+    const [list, setList] = useState<any[]>([])
+
+    
+    const getEmps = () => {
+        if(token) {
+            service.getEmps(token).then(res => {
+                console.log(res)
+                setList(res?.employees)
+            })
+        }
+    }
+
+    useEffect(() => {
+        getEmps()
+    }, [token])
 
     return (
         <div className={styles.wrapper}>
@@ -60,13 +75,16 @@ const EmpPage = () => {
                                 }
                             </tr>
                             {
-                                mockData?.map((item,index) => (
+                                list?.map((item,index) => (
                                     <tr className='table__row'>
-                                        {
-                                            item?.map((i, ind) => (
-                                                <td className="table__item">{i}</td>
-                                            )) 
-                                        }
+                                        <td className="table__item">{item.id}</td>
+                                        <td className="table__item">{item.name}</td>
+                                        <td className="table__item">{item.role}</td>
+                                        <td className="table__item">-</td>
+                                        <td className="table__item">-</td>
+                                        <td className="table__item">-</td>
+                                        <td className="table__item">-</td>
+                                        <td className="table__item">-</td>
                                     </tr>
                                 ))
                             }

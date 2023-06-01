@@ -1,0 +1,46 @@
+.wrapper {
+    overflow: hidden;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 38px rgba(0, 0, 0, 0.05);
+    border-radius: 11px;
+    
+
+
+    input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+        touch-action: none;
+    }
+
+    .label {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 0 20px;
+        padding-right: 0;
+        height: 100%;
+
+        .title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #7E7E7E;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9C9C9C;
+            padding: 0 10px;
+        }
+    }
+}

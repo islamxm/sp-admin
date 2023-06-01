@@ -14,7 +14,7 @@ const endpoints = {
 
     getCats: `${PATH}admin/templates/get_categories.php`,
 
-    addCat: `${PATH}api/admin/templates/add_category.php`,  
+    addCat: `${PATH}admin/templates/add_category.php`,  
 
     deleteCat: `${PATH}admin/templates/delete_category.php`,
 
@@ -35,6 +35,8 @@ const endpoints = {
     deleteTemp: `${PATH}admin/templates/delete_template.php`,
 
     getInputsFromFile: `${PATH}admin/templates/get_inputs_from_file.php`,
+
+    getDataTypes: `${PATH}admin/templates/get_creation_data.php`
 
 }
 

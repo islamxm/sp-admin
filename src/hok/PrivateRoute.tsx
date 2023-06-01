@@ -5,9 +5,6 @@ import { Navigate } from "react-router-dom";
 const PrivateRoute = ({children}: {children?: ReactNode}) => {
     const {mainReducer: {token}} = useAppSelector(s => s)
 
-    useEffect(() => {
-        console.log(token)
-    }, [token])
 
 
     if(!token) {
