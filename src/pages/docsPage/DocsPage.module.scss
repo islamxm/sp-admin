@@ -13,6 +13,16 @@
             flex: 0 0 auto;
             display: flex;
             justify-content: flex-end;
+            flex-wrap: wrap;
+
+            .action_item {
+                margin: 5px;
+                width: 100%;
+
+                button {
+                    width: 100%;
+                }
+            }
         }
 
     }

@@ -1,0 +1,13 @@
+.ant-picker {
+    height: 40px;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 38px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;    
+    .ant-picker-input {
+
+    }
+}
+
+.ant-picker.ant-picker-focused {
+    border-color: var(--blue);
+}

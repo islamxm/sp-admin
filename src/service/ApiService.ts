@@ -394,6 +394,21 @@ class ApiService {
             console.log(err)
         }
     }
+
+    getDocs = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.getDocs, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 

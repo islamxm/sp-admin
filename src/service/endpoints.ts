@@ -55,6 +55,8 @@ const endpoints = {
 
     deleteStation: `${PATH}admin/stations/delete_station.php`,
 
-}
+
+    getDocs: `${PATH}admin/get_documents.php`,
+}   
 
 export default endpoints;

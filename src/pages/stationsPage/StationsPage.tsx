@@ -66,15 +66,6 @@ const StationsPage = () => {
                                     </Col>
                                 ))
                             }
-                            {/* add */}
-                            <Col span={4}>
-                                <Card 
-                                    isAdd 
-                                    isCat
-                                    placeholder='Новая станция'
-                                    onAddCat={() => setModal(true)}
-                                    />
-                            </Col>  
                         </> 
                     )
                 }   
