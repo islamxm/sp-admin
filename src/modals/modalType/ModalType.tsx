@@ -134,6 +134,8 @@ const ModalType:FC<I> = (props) => {
 
 
     const onClose = () => {
+        setPicture(null)
+        setPreview('')
         setTitle('')
         onCancel && onCancel()
     }
