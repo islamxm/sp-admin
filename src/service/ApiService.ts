@@ -272,6 +272,53 @@ class ApiService {
             console.log(err)
         }
     }
+
+    addArch = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.addArch, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    editArch = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.editArch, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+
+    deleteArch = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.deleteArch, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    
 }
 
 

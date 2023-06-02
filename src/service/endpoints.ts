@@ -10,6 +10,8 @@ const endpoints = {
 
     addArch: `${PATH}admin/archives/add_archive.php`,
 
+    deleteArch: `${PATH}admin/archives/delete_archive.php`,
+
     getEmps: `${PATH}admin/employees/get_employees.php`,
 
     getCats: `${PATH}admin/templates/get_categories.php`,

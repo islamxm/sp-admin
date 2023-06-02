@@ -3,7 +3,9 @@ export interface ICard {
     label?: string,
     isAdd?: boolean,
     isCat?: boolean,
-    data?: any
+    data?: any,
+
+    placeholder?: string
 
     onRoute?: (...args: any[]) => any,
     onSelect?: (...args: any[]) => any

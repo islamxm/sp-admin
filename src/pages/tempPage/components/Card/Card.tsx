@@ -13,6 +13,8 @@ const Card:FC<ICard> = ({
     isCat,
     id,
     data,
+
+    placeholder='Добавить новый тип',
     
     onRoute,
     onSelect,
@@ -33,12 +35,12 @@ const Card:FC<ICard> = ({
                             <Col span={24}>
                                 <div 
                                     onClick={() => onAddCat && onAddCat()}
-                                    className={styles.part}><div className={styles.label}>Добавить новый тип</div></div>
+                                    className={styles.part}><div className={styles.label}>{placeholder}</div></div>
                             </Col>
                         ) : (
                             <>
                                 <Col span={12}>
-                                    <div onClick={() => onAddCat && onAddCat()} className={styles.part}><div className={styles.label}>Добавить новый тип</div></div>
+                                    <div onClick={() => onAddCat && onAddCat()} className={styles.part}><div className={styles.label}>{placeholder}</div></div>
                                 </Col>
                                 <Col span={12}>
                                     <div onClick={() => onAddTemplate && onAddTemplate()} className={styles.part}><div className={styles.label}>Добавить шаблон</div></div>

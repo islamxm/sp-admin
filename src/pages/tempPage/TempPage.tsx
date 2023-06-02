@@ -2,10 +2,7 @@ import styles from './TempPage.module.scss';
 import { Row, Col } from 'antd';
 import Card from './components/Card/Card';
 import ModalType from '../../modals/modalType/ModalType';
-import ModalArchive from '../../modals/modalArchive/ModalArchive';
 import ModalTemplate from '../../modals/modalTemplate/ModalTemplate';
-import ModalRevokeDoc from '../../modals/modalRevokeDoc/ModalRevokeDoc';
-import ModalEmp from '../../modals/modalEmp/ModalEmp';
 import { useAppSelector } from '../../hooks/reduxHook';
 import ApiService from '../../service/ApiService';
 import { useEffect, useState } from 'react';
@@ -19,7 +16,7 @@ const service = new ApiService()
 const TempPage = () => {
     const {mainReducer: {token}} = useAppSelector(s => s)
     
-    const nav = useNavigate()
+    
     const [params, setParams] = useSearchParams()
 
     const [load, setLoad] = useState(false)
