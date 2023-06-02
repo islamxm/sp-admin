@@ -20,6 +20,14 @@ const menuList = [
         label: 'Архив',
         url: '/archive'
     },
+    {
+        label: 'Принтеры',
+        url: '/printers'
+    },
+    {
+        label: 'Станции',
+        url: '/stations'
+    },
     // {
     //     label: 'Отчеты',
     //     url: '/reports'

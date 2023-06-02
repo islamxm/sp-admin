@@ -11,7 +11,8 @@ import TempPage from '../../pages/tempPage/TempPage';
 import EmpPage from '../../pages/empPage/EmpPage';
 import ArchPage from '../../pages/archPage/ArchPage';
 import AuthPage from '../../pages/authPage/AuthPage';
-
+import PrintersPage from '../../pages/printersPage/PrintersPage';
+import StationsPage from '../../pages/stationsPage/StationsPage';
 
 
 
@@ -31,6 +32,8 @@ const App:FC = () => {
                         <Route path='/templates' element={<PrivateRoute><TempPage/></PrivateRoute>}/>
                         <Route path='/archive' element={<PrivateRoute><ArchPage/></PrivateRoute>}/>
                         <Route path='/employees' element={<PrivateRoute><EmpPage/></PrivateRoute>}/>
+                        <Route path='/printers' element={<PrivateRoute><PrintersPage/></PrivateRoute>}/>
+                        <Route path='/stations' element={<PrivateRoute><StationsPage/></PrivateRoute>}/>
                     </Routes>
                 </Layout>
             </div>

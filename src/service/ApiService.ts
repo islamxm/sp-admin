@@ -318,7 +318,82 @@ class ApiService {
             console.log(err)
         }
     }
+
+    addPrinter = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.addPrinter, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    editPrinter = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.editPrinter, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
     
+
+    deletePrinter = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.deletePrinter, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    editStation = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.editStation, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    deleteStation = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.deleteStation, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            return await res?.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 

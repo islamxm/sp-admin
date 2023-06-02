@@ -42,7 +42,18 @@ const endpoints = {
 
     getStations: `${PATH}admin/stations/get_stations.php`,
 
-    getPrinters: `${PATH}admin/printers/get_printers.php`
+    getPrinters: `${PATH}admin/printers/get_printers.php`,
+
+    addPrinter: `${PATH}admin/printers/add_printer.php`,
+
+    editPrinter: `${PATH}admin/printers/change_printer.php`,
+
+    deletePrinter: `${PATH}admin/printers/delete_printer.php`,
+
+
+    editStation: `${PATH}admin/stations/change_station.php`,
+
+    deleteStation: `${PATH}admin/stations/delete_station.php`,
 
 }
 
