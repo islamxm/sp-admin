@@ -1,5 +1,5 @@
 import endpoints from "./endpoints";
-
+import checkAuth from "../utils/checkAuth";
 const headers = {
     'Content-type': 'application/json'
 }
@@ -30,7 +30,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -47,7 +47,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -62,7 +62,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -77,7 +77,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -93,7 +93,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -108,7 +108,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -148,7 +148,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -164,7 +164,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -180,7 +180,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -195,7 +195,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -209,7 +209,7 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         } 
@@ -224,7 +224,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         } 
@@ -239,7 +239,7 @@ class ApiService {
                     'Authorization': token
                 },
             })
-            return await res?.json() 
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -253,7 +253,7 @@ class ApiService {
                     'Authorization': token
                 },
             })
-            return await res?.json() 
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -267,7 +267,7 @@ class ApiService {
                     'Authorization': token
                 },
             })
-            return await res?.json() 
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -282,7 +282,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -297,7 +297,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -313,7 +313,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -328,7 +328,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -343,7 +343,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -359,7 +359,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -374,7 +374,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -389,7 +389,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
@@ -404,7 +404,7 @@ class ApiService {
                 },
                 body
             })
-            return await res?.json()
+            return await checkAuth(res)
         } catch(err) {
             console.log(err)
         }
