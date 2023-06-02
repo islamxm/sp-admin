@@ -244,6 +244,34 @@ class ApiService {
             console.log(err)
         }
     }
+
+    getStations = async (token: any) => {
+        try {
+            let res = await fetch(endpoints.getStations, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+            })
+            return await res?.json() 
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    getPrinters = async (token: any) => {
+        try {
+            let res = await fetch(endpoints.getPrinters, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+            })
+            return await res?.json() 
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 

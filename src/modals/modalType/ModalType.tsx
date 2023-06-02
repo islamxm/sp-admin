@@ -33,24 +33,22 @@ const ModalType:FC<I> = (props) => {
     const [delLoad, setDelLoad] = useState(false)
 
     const [title, setTitle] = useState('')
-    const [picture, setPicture] = useState<Blob | null>(null)
-    const [preview, setPreview] = useState('')
+    // const [picture, setPicture] = useState<Blob | null>(null)
+    // const [preview, setPreview] = useState('')
 
 
-    useEffect(() => {
-        if(picture) {
-            setPreview(URL.createObjectURL(picture))
-        } else setPreview('')
-    }, [picture])
+    // useEffect(() => {
+    //     if(picture) {
+    //         setPreview(URL.createObjectURL(picture))
+    //     } else setPreview('')
+    // }, [picture])
     
 
     useEffect(() => {
         if(data) {
             setTitle(data?.title)
-            setPreview(data?.thumbnail_url)
         } else {
             setTitle('')
-            setPicture(null)
         }
     }, [data])
 
@@ -64,14 +62,13 @@ const ModalType:FC<I> = (props) => {
                     const body = new FormData()
                     body.append('title', title)
                     body.append('category_id', data?.id)
-                    if(picture) {
-                        body.append('thumbnail_picture', picture)
-                    }
-                    if(!preview && !picture) {
-                        body.append('thumbnail_picture', '')
-                    }
+                    // if(picture) {
+                    //     body.append('thumbnail_picture', picture)
+                    // }
+                    // if(!preview && !picture) {
+                    //     body.append('thumbnail_picture', '')
+                    // }
                     service.editCat(body,token).then(res => {
-                        console.log(res)
                         if(res?.error === false) {
                             onUpdate && onUpdate()
                             onClose()
@@ -82,14 +79,13 @@ const ModalType:FC<I> = (props) => {
                 } else {
                     const body = new FormData()
                     body.append('title', title)
-                    if(picture) {
-                        body.append('thumbnail_picture', picture)
-                    }
                     service.addCat(body,token).then(res => {
-                        console.log(res)
+                 
                         if(res?.error === false) {
                             onUpdate && onUpdate()
                             onClose()
+                        } else {
+                            alert('Произошла ошибка')
                         }
                     }).finally(() => {
                         setLoad(false)
@@ -97,7 +93,8 @@ const ModalType:FC<I> = (props) => {
                 }
             }
             if(elementType === 2) {
-
+                setLoad(false)
+                alert('NO_FUNC_GN')
             }
             
         }
@@ -110,10 +107,11 @@ const ModalType:FC<I> = (props) => {
             const body = new FormData()
             body.append('category_id', data?.id)
             service.deleteCat(body, token).then(res => {
-                console.log(res)
                 if(res?.error === false) {
                     onUpdate && onUpdate()
                     onClose() 
+                } else {
+                    alert('Произошла ошибка')
                 }
             }).finally(() => {
                 setDelLoad(false)
@@ -125,17 +123,17 @@ const ModalType:FC<I> = (props) => {
 
 
 
-    const onPictureChange = (e:ChangeEvent<HTMLInputElement>) => {
-        if(typeof e.target.files?.length !== 'undefined' && e.target.files?.length > 0) {
-            setPicture(e.target.files[0])
-        }
-    }
+    // const onPictureChange = (e:ChangeEvent<HTMLInputElement>) => {
+    //     if(typeof e.target.files?.length !== 'undefined' && e.target.files?.length > 0) {
+    //         setPicture(e.target.files[0])
+    //     }
+    // }
 
 
 
     const onClose = () => {
-        setPicture(null)
-        setPreview('')
+        // setPicture(null)
+        // setPreview('')
         setTitle('')
         onCancel && onCancel()
     }
@@ -148,7 +146,11 @@ const ModalType:FC<I> = (props) => {
             footer={false}
             onCancel={onClose}
             >
-            <div className='modal-title'>Добавить новый тип</div>
+            <div className='modal-title'>
+                {
+                    data ? 'Редактировать тип' : 'Добавить новый тип'
+                }
+            </div>
             <Row gutter={[25,25]}>
                 <Col span={24}>
                     <Input
@@ -158,7 +160,7 @@ const ModalType:FC<I> = (props) => {
                         value={title}
                         />
                 </Col>
-                <Col span={24}>
+                {/* <Col span={24}>
                     <UploadFile
                         id='upload-type-pic'
                         onChange={onPictureChange}
@@ -170,7 +172,7 @@ const ModalType:FC<I> = (props) => {
                         value={''}
                         preview={preview}
                         />
-                </Col>
+                </Col> */}
                 <Col span={24}>
                     {
                         data ? (

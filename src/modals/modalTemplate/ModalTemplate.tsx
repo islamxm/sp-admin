@@ -13,6 +13,7 @@ import { useSearchParams } from 'react-router-dom';
 import getParams from '../../utils/getParams';
 import UploadDoc from '../../components/UploadDoc/UploadDoc';
 import ModalEmp from '../modalEmp/ModalEmp';
+import {Checkbox, Popover} from 'antd';
 
 
 const service = new ApiService()
@@ -36,7 +37,11 @@ const ModalTemplate:FC<I> = (props) => {
 
     const [load, setLoad] = useState(false)
     const [delLoad, setDelLoad] = useState(false)
-
+    const [empsList, setEmpsList] = useState<any[]>([])
+    const [dataTypes, setDataTypes] = useState<{value: string, label: string}[]>([])
+    const [stationsList, setStationsList] = useState<{value: string, label: string}[]>([])
+    const [printersList, setPrintersList] = useState<{value: string, label: string}[]>([])
+    const [selectedEmp, setSelectedEmp] = useState<any>(null)
 
     const [archives, setArchives] = useState<any[]>([])
 
@@ -44,11 +49,10 @@ const ModalTemplate:FC<I> = (props) => {
     const [doc, setDoc] = useState<File | null>(null) 
     const [docprev, setDocprev] = useState('')
 
-    const [picture, setPicture] = useState<Blob | null>(null)
-    const [preview, setPreview] = useState('')
 
-    const [category_id, setcategory_id] = useState('')
-    const [parent_id, setparent_id] = useState('')
+
+    const [station_id, setstation_id] = useState('')
+    const [printer_id, setprinter_id] = useState('')
     const [archive_id, setarchive_id] = useState('')
     const [title, settitle] = useState('')
     const [inputs, setinputs] = useState<{id:string, keyword: string, name: string,data_type_id:string,required: string}[]>([])
@@ -59,22 +63,59 @@ const ModalTemplate:FC<I> = (props) => {
 
 
     const onClose = () => {
+        settitle('')
+        setstation_id('')
+        setprinter_id('')
+        setarchive_id('')
+        setinputs([])
+        setemployees([])
         onCancel && onCancel()
     }
 
-    useEffect(() => {
+
+    const getArchs = () => {
         if(token) {
             service.getArchs(token).then(res => {
                 setArchives(res?.archives)
             })
         }
-    }, [token])
+    }
+
+    const getStations = () => {
+        if(token) {
+            service.getStations(token).then(res => {
+                setStationsList(res?.stations?.map((i: any) => ({value: i.id, label: i.title})))
+            })
+        }
+    }
+
+    const getPrinters = () => {
+        if(token) {
+            service.getPrinters(token).then(res => {
+                setPrintersList(res?.printers?.map((i: any) => ({value: i.id, label: i.name})))
+            })
+        }
+    }
+
+    const getDataTypes = () => {
+        if(token) {
+            service.getDataTypes(token).then(res => {
+                setDataTypes(res?.data_types?.map((i: any) => ({value: i.id, label: i.name})))
+            })
+        }
+    }
 
     useEffect(() => {
-        if(picture) {
-            setPreview(URL.createObjectURL(picture))
-        } else setPreview('')
-    }, [picture])
+        getArchs()
+        getDataTypes()
+        getStations()
+        getPrinters()
+    }, [token])
+
+
+   
+
+
 
     useEffect(() => {
         if(doc) {
@@ -85,13 +126,23 @@ const ModalTemplate:FC<I> = (props) => {
     }, [doc])
 
 
-    useEffect(() => {
+    useEffect(() => { 
         if(data) {
+            console.log(data)
             if(token) {
                 const body = new FormData()
                 body.append('template_id', data?.id)
                 service.getTemp(body,token).then(res => {
                     console.log(res)
+                    if(res?.error === false) {
+                        setarchive_id(res?.archieve_id)
+                        setemployees(res?.employees?.map((e: any) => ({id: '0', employee_id: e.id})))
+                        setinputs(res?.inputs)
+                        setprinter_id(res?.printer_id)
+                        setstation_id(res?.station_id)
+                        settitle(res?.title)
+
+                    }
                 })
             }
         }
@@ -99,47 +150,98 @@ const ModalTemplate:FC<I> = (props) => {
 
 
 
+
     const onSave = () => {
         if(token) {
             setLoad(true)
-            const body = new FormData()
-            body.append('data', `{
-                category_id: ${getParams(params).join('/')[0]},
-                parent_id: '',
-                archive_id: '',
-                title: '',
-                inputs: [],
-                employees: []
-            }`)
-            if(picture) {
-                body.append('thumbnail_picture', picture)
+            if(data) {
+                const body = new FormData()
+                body.append('data', JSON.stringify({
+                    id: data?.id,
+                    archive_id,
+                    title,
+                    inputs,
+                    employees,
+                    station_id,
+                    printer_id
+                }))
+                if(doc) {
+                    body.append('document_file', doc)
+                }
+                service.editTemp(body,token).then(res => {
+                    if(res?.error === false) {
+                        onUpdate && onUpdate()
+                        onClose()
+                    } else {
+                        alert('Произошла ошибка')
+                    }
+                }).finally(() => {
+                    setLoad(false)
+                })
+            } else {
+                const body = new FormData()
+                body.append('data', JSON.stringify({
+                    category_id: getParams(params)[0],
+                    parent_id: getParams(params)?.length > 2 ? getParams(params)[getParams(params).length - 2] : 0,
+                    archive_id,
+                    title,
+                    inputs,
+                    employees,
+                    station_id,
+                    printer_id
+                }))
+                if(doc) {
+                    body.append('document_file', doc)
+                }
+                service.addTemp(body,token).then(res => {
+                    if(res?.error === false) {
+                        onUpdate && onUpdate()
+                        onClose()
+                    } else {
+                        alert('Произошла ошибка')
+                    }
+                }).finally(() => {
+                    setLoad(false)
+                })
             }
-            if(doc) {
-                body.append('document_file', doc)
-            }
-            service.addTemp(body,token).then(res => {
-                console.log(res)
-            })
-            
             
         }   
+    }
+
+    const onDelete = () => {
+        if(data && token) {
+            setDelLoad(true)
+            const body = new FormData()
+            body.append('template_id', data?.id)
+
+            service.deleteTemp(body,token).then(res => {
+                if(res?.error === false) {
+                    onUpdate && onUpdate()
+                    onClose()
+                } else {
+                    alert('Произошла ошибка')
+                }
+                
+            }).finally(() => {
+                setDelLoad(false)
+            })
+        }
     }
 
 
     const onUploadDoc = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.files?.length !== undefined) {
             setDoc(e.target.files[0])
-
             const body = new FormData()
             body.append('document_file', e.target.files[0])
             service.getInputsFromFile(body, token).then(res => {
                 setinputs(res?.keywords?.map((i: any) => {
                     return {
-                        id: 0,
+                        id: '0',
                         keyword: i,
                         name: '',
-                        data_type_id: 0,
-                        required: 0
+                        data_type_id: '1',
+                        required: '0'
                     }
                 }))
             })
@@ -147,20 +249,60 @@ const ModalTemplate:FC<I> = (props) => {
     }
 
 
+    useEffect(() => {
+        if(token) {
+            service.getEmps(token).then(res => {
+                setEmpsList(res?.employees)
+            })
+        }
+    }, [token])
+
+
+    const onEmpSelect = (id: string) => {
+        const item = empsList.find(i => i.id === id)
+        const isHaveInCurrentList = employees.find(i => i.employee_id === id)
+
+        if(!isHaveInCurrentList) {
+            setemployees(s => [...s, {id: '0', employee_id: id}])
+        } 
+    }
+
+    const onEmpDelete = (id: string) => {
+        setemployees(s => {
+            const m = s;
+            const rm = m.splice(m.findIndex(d => d.employee_id === id), 1)
+            return [...m]
+        })
+    }
+
+    
+
+
     return (
         <>
             <ModalEmp
                 open={empModal}
-                // selectEmp={}
+                onCancel={() => {
+                    setEmpModal(false)
+                    setSelectedEmp(null)
+                }}
+                onDelete={onEmpDelete}
+                selectEmp={onEmpSelect}
+                list={empsList?.map(i => ({value: i.id, label: i.name}))}
+                data={selectedEmp}
                 />
             <Modal
             {...props}
             className={`modal modal-ll ${styles.wrapper}`}
-            width={435}
+            width={750}
             footer={false}
             onCancel={onClose}
             >
-            <div className='modal-title'>Добавить шаблон</div>
+            <div className='modal-title'>
+                {
+                    data ? 'Редактировать шаблон' : 'Добавить шаблон'
+                }
+            </div>
             <div className={styles.body}>
             <Row gutter={[15,15]}>
                 <Col span={24}>
@@ -175,13 +317,34 @@ const ModalTemplate:FC<I> = (props) => {
                     <Select
                         label='Архив'
                         placeholder="Выбрать архив"
-                        onChange={(e) => setarchive_id(e)}
+                        onChange={setarchive_id}
                         options={archives?.map(i => {
                             return {
                                 value: i.id,
                                 label: i.title
                             }
                         })}
+                        value={archive_id ? archive_id : null}
+                        />
+                </Col>
+                <Col span={24}>
+                    <Select
+                        label='Станция'
+                        placeholder="Выбор станции"
+                        // value={station_id}
+                        onChange={setstation_id}
+                        options={stationsList}
+                        value={station_id ? station_id : null}
+                        />
+                </Col>
+                <Col span={24}>
+                    <Select
+                        label='Принтер'
+                        placeholder="Выбор принтера"
+                        // value={printer_id}
+                        onChange={setprinter_id}
+                        options={printersList}
+                        value={printer_id ? printer_id : null}
                         />
                 </Col>
                 <Col span={24}>
@@ -199,19 +362,57 @@ const ModalTemplate:FC<I> = (props) => {
                                 <div className={styles.head}>Поля для ввода:</div>
                                 <Row gutter={[8,8]}>
                                     {
-                                        inputs?.map(i => (
+                                        inputs?.map((i, index) => (
                                             <Col span={24}>
                                                 <Row gutter={[12,12]}>
                                                     <Col span={4}>{i.keyword} -</Col>
-                                                    <Col span={14}>
-                                                        <Input
+                                                    <Col span={8}>
+                                                        <Input 
+                                                            value={inputs[index].name}
+                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                                setinputs(s => {
+                                                                    const m = s;
+                                                                    const rm = m.splice(index, 1, {...s[index], name: e.target.value})
+                                                                    return [...m]
+                                                                })
+                                                            }}
                                                             fill
                                                             placeholder='Название'
                                                             />
                                                     </Col>
                                                     <Col span={6}>
                                                         <Select
+                                                            value={inputs[index].data_type_id.toString() === '0' ? '' : inputs[index].data_type_id.toString()}
+                                                            options={dataTypes}
+                                                            onChange={e => {
+                                                                setinputs(s => {
+                                                                    const m = s;
+                                                                    const rm = m.splice(index, 1, {...s[index], data_type_id: e})
+                                                                    return [...m]
+                                                                })
+                                                            }}
                                                             placeholder="Строка"
+                                                            />
+                                                    </Col>
+                                                    <Col span={6}>
+                                                        <span style={{marginRight: 10}}>Обьязательно</span>
+                                                        <Checkbox
+                                                            onChange={e => {
+                                                                if(e.target.checked) {
+                                                                    setinputs(s => {
+                                                                        const m = s;
+                                                                        const rm = m.splice(index, 1, {...s[index], required: '1'})
+                                                                        return [...m]
+                                                                    })
+                                                                } else {
+                                                                    setinputs(s => {
+                                                                        const m = s;
+                                                                        const rm = m.splice(index, 1, {...s[index], required: '0'})
+                                                                        return [...m]
+                                                                    })
+                                                                }
+                                                            }}
+                                                            checked={inputs[index].required === '1'}
                                                             />
                                                     </Col>
                                                 </Row>
@@ -229,44 +430,62 @@ const ModalTemplate:FC<I> = (props) => {
                         <div className={styles.head}>Доступ сотрудников:</div>
                         <Row gutter={[10,10]} justify={'center'}>
                             <Col span={20}>
-                                <button className={styles.add}>
+                                <button 
+                                    onClick={() => setEmpModal(true)}
+                                    className={styles.add}>
                                     Добавить
                                 </button>
                             </Col>
-                            <Col span={20}>
-                                <Item/>
-                            </Col>
-                            <Col span={20}>
-                                <Item/>
-                            </Col>
-                            <Col span={20}>
-                                <Item/>
-                            </Col>
-                            <Col span={20}>
-                                <Item/>
-                            </Col>
-                            <Col span={20}>
-                                <Item/>
-                            </Col>
-                            <Col span={20}>
-                                <Item/>
-                            </Col>
+                            {
+                                employees?.map((i,index) => (
+                                     <Col span={20}>
+                                        <Item
+                                            onSelect={(d) => {
+                                                setSelectedEmp(d)
+                                                setEmpModal(true)
+                                            }}
+                                            onDelete={onEmpDelete}
+                                            data={empsList?.find(emp => emp.id === i.employee_id)}
+                                            />
+                                    </Col>
+                                ))
+                            }
                         </Row>
                     </div>
                 </Col>
             </Row>
             <div className={styles.action}>
                 <Row gutter={[12,12]}>
-                    <Col span={12}>
-                        <Button
-                            load={load} 
-                            onClick={onSave}
-                            text='Сохранить' 
-                            fill/>
-                    </Col>
-                    <Col span={12}>
-                        <Button text='Удалить' fill variant={'danger'}/>
-                    </Col>
+                    {
+                        data ? (
+                            <>  
+                                <Col span={12}>
+                                    <Button
+                                        load={load} 
+                                        onClick={onSave}
+                                        text='Сохранить' 
+                                        fill/>
+                                </Col>
+                                <Col span={12}>
+                                    <Button
+                                        onClick={onDelete}
+                                        load={delLoad} 
+                                        text='Удалить' 
+                                        fill 
+                                        variant={'danger'}/>
+                                </Col>
+                            </>
+                        ) : (
+                            <Col span={24}>
+                                <Button
+                                    load={load} 
+                                    onClick={onSave}
+                                    text='Сохранить' 
+                                    fill/>
+                            </Col>
+                        )
+                    }
+                    
                 </Row>
             </div>
             </div>

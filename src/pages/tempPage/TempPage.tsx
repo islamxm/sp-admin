@@ -11,6 +11,7 @@ import ApiService from '../../service/ApiService';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import getParams from '../../utils/getParams';
+import { PulseLoader } from 'react-spinners';
 
 const service = new ApiService()
 
@@ -21,45 +22,65 @@ const TempPage = () => {
     const nav = useNavigate()
     const [params, setParams] = useSearchParams()
 
+    const [load, setLoad] = useState(false)
+
     const [modalCat, setModalCat] = useState(false)
     const [modalTemp, setModalTemp] = useState(false)
 
     const [pathList, setPathList] = useState<any[]>([])
 
-    const [list, setList] = useState<any[]>([])
+    // const [list, setList] = useState<any[]>([])
+    const [catsList, setCatsList] = useState<any[]>([])
+    const [tempsList, setTempsList] = useState<any[]>([])
+
+
     const [selected, setSelected] = useState<any>(null)
     const [temp, setTemp] = useState<any>(null)
 
 
     const getCats = () => {
         if(token) {
+            setLoad(true)
             service.getCats(token).then(res => {
-                setList(res?.categories)
-                console.log(res?.categories)
+                setCatsList(res?.categories)
+                console.log(res)
+            }).finally(() => {
+                setLoad(false)
             })
         }
     }
 
     const getTemps = (category_id: string, parent_id: string) => {
         if(token) {
+            setLoad(true)
             const data = new FormData()
             data.append('category_id', category_id)
             data.append('parent_id', parent_id)
             service.getTemps(data, token).then(res => {
-                setList(res?.templates)
-                console.log(res?.templates)
+                setTempsList(res?.templates)
+                console.log(res)
+            }).finally(() => {
+                setLoad(false)
             })
-
-            
         }
     }   
 
 
 
     const onUpdate = () => {
-        if(pathList?.length > 0) {
-            getTemps(pathList[0], pathList[pathList.length - 1])
-        } else {
+  
+        if(pathList?.length >= 1) {
+            if(pathList?.length === 1) {
+                getTemps(pathList[0], '0')
+            }
+            if(pathList?.length === 2) {
+                getTemps(pathList[0], pathList[1])
+            }
+            if(pathList?.length > 2) {
+                getTemps(pathList[0], pathList[pathList.length - 1])
+            }
+        } 
+        if(pathList?.length === 0) {
             getCats()
         }
     }
@@ -67,7 +88,6 @@ const TempPage = () => {
     useEffect(() => {
         if(params) {
             setPathList(getParams(params))
-            console.log('path')
         }
     }, [params])
 
@@ -95,6 +115,16 @@ const TempPage = () => {
             setModalCat(false)
         }
     }, [selected])
+
+    useEffect(() => {
+        if(temp) {
+            setModalTemp(true)
+        } else {
+            setModalTemp(false)
+        }
+    }, [temp])
+
+    
     
 
     return (
@@ -120,32 +150,62 @@ const TempPage = () => {
                 />
             <Row gutter={[12,12]}>
                 {
-                    list?.map((item,index) => (
-                        <Col 
-                            key={item.id} 
-                            span={4}>
-                            <Card 
-                                data={item}
-                                id={item.id} 
-                                onRoute={onRoute} 
-                                label={item.title}
-                                onSelect={(data) => (item?.hasOwnProperty('is_subcategory') && item?.is_subcategory === '0') ? setTemp(data) : setSelected(data)}
-                                />
-                        </Col>
-                    ))
-                }   
+                    load ? (
+                        <div className={styles.load}><PulseLoader color='#383F56'/></div>
+                    ) : (
+                        <>
+                            {
+                                pathList?.length === 0 ? (
+                                    catsList?.map((item,index) => (
+                                        <Col 
+                                            key={item.id} 
+                                            span={4}>
+                                            <Card 
+                                                data={item}
+                                                id={item.id} 
+                                                onRoute={onRoute} 
+                                                label={item.title}
+                                                onSelect={(d) => {
+                                                    (item?.hasOwnProperty('is_sub_category') && item?.is_sub_category === '0') ? setTemp(d) : setSelected(d)
+                                                }}
+                                                />
+                                        </Col>
+                                    ))
+                                ) : (
+                                    tempsList?.map((item,index) => (
+                                        <Col 
+                                            key={item.id} 
+                                            span={4}>
+                                            <Card 
+                                                data={item}
+                                                id={item.id} 
+                                                onRoute={onRoute} 
+                                                label={item.title}
+                                                onSelect={(d) => {
+                                                    (item?.hasOwnProperty('is_sub_category') && item?.is_sub_category === '0') ? setTemp(d) : setSelected(d)
+                                                }}
+                                                />
+                                        </Col>
+                                    ))
+                                )
+                                
+                            }   
 
 
 
-                {/* add */}
-                <Col span={4}>
-                    <Card 
-                        isAdd 
-                        isCat={getParams(params)?.length === 0}
-                        onAddCat={() => setModalCat(true)}  
-                        onAddTemplate={() => setModalTemp(true)}  
-                        />
-                </Col>    
+                            {/* add */}
+                            <Col span={4}>
+                                <Card 
+                                    isAdd 
+                                    isCat={getParams(params)?.length === 0}
+                                    onAddCat={() => setModalCat(true)}  
+                                    onAddTemplate={() => setModalTemp(true)}  
+                                    />
+                            </Col>   
+                        </>
+                    )
+                }
+                 
             </Row> 
         </div>
     )

@@ -1,3 +1,10 @@
 .wrapper {
     padding-bottom: 30px;
+
+    .load {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

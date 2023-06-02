@@ -21,6 +21,7 @@ const Card:FC<ICard> = ({
     onAddTemplate
 }) => {
 
+    
 
 
     if(isAdd) {
@@ -58,7 +59,12 @@ const Card:FC<ICard> = ({
                 <IconButton onClick={() => onSelect && onSelect(data)} icon={<MdEditDocument size={20}/>}/>
             </div>
             <div 
-                onClick={() => onRoute && onRoute(id)}
+                onClick={() => {
+                    
+                    if(data?.is_sub_category === undefined || data?.is_sub_category === '1') {
+                        onRoute && onRoute(id)
+                    }
+                }}
                 className={styles.in}>
                 <div className={styles.label}>
                     {label}

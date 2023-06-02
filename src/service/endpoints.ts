@@ -36,7 +36,11 @@ const endpoints = {
 
     getInputsFromFile: `${PATH}admin/templates/get_inputs_from_file.php`,
 
-    getDataTypes: `${PATH}admin/templates/get_creation_data.php`
+    getDataTypes: `${PATH}admin/templates/get_creation_data.php`,
+
+    getStations: `${PATH}admin/stations/get_stations.php`,
+
+    getPrinters: `${PATH}admin/printers/get_printers.php`
 
 }
 
