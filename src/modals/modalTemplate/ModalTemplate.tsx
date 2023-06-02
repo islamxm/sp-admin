@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import getParams from '../../utils/getParams';
 import UploadDoc from '../../components/UploadDoc/UploadDoc';
+import ModalEmp from '../modalEmp/ModalEmp';
 
 
 const service = new ApiService()
@@ -31,6 +32,7 @@ const ModalTemplate:FC<I> = (props) => {
     } = props
     const {mainReducer: {token}} = useAppSelector(s => s)
     const [params, setParams] = useSearchParams()
+    const [empModal, setEmpModal] = useState(false)
 
     const [load, setLoad] = useState(false)
     const [delLoad, setDelLoad] = useState(false)
@@ -146,7 +148,12 @@ const ModalTemplate:FC<I> = (props) => {
 
 
     return (
-        <Modal
+        <>
+            <ModalEmp
+                open={empModal}
+                // selectEmp={}
+                />
+            <Modal
             {...props}
             className={`modal modal-ll ${styles.wrapper}`}
             width={435}
@@ -265,6 +272,8 @@ const ModalTemplate:FC<I> = (props) => {
             </div>
            
         </Modal>
+        </>
+        
     )
 
 }

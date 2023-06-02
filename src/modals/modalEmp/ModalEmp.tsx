@@ -6,19 +6,21 @@ import Select from '../../components/Select/Select';
 
 
 interface I extends ModalFuncProps {
-
+    selectEmp?:(...args: any[]) => any
 }
 
 
 const ModalEmp:FC<I> = (props) => {
+    const {selectEmp} = props;
 
+    
     return (
         <Modal
             {...props}
             className={`modal`}
             footer={false}
             >
-            <div className='modal-title'>Добавить новый тип</div>
+            <div className='modal-title'>Выбор сотрудника</div>
             <Row gutter={[25,25]}>
                 <Col span={24}>
                     <Select

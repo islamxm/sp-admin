@@ -129,7 +129,7 @@ const TempPage = () => {
                                 id={item.id} 
                                 onRoute={onRoute} 
                                 label={item.title}
-                                onSelect={() => (item?.hasOwnPropery('is_subcategory') && item?.is_subcategory === '0') ? setTemp : setSelected}
+                                onSelect={(data) => (item?.hasOwnProperty('is_subcategory') && item?.is_subcategory === '0') ? setTemp(data) : setSelected(data)}
                                 />
                         </Col>
                     ))
