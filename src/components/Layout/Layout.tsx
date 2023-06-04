@@ -15,7 +15,7 @@ const Layout:FC<{children?: ReactNode}> = ({children}) => {
             <div className={`${styles.main}`}>
             {children}
             </div>
-            {location?.pathname === '/archive' && <Footer/>}
+            {location?.pathname === '/templates' && <Footer/>}
         </div>
     )
 }
