@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import getParams from '../../utils/getParams';
 import { PulseLoader } from 'react-spinners';
-
+import List from '../../components/List/List';
 const service = new ApiService()
 
 
@@ -145,7 +145,7 @@ const TempPage = () => {
                 }}
                 onUpdate={onUpdate}
                 />
-            <Row gutter={[12,12]}>
+            <List>
                 {
                     load ? (
                         <div className={styles.load}><PulseLoader color='#383F56'/></div>
@@ -154,54 +154,43 @@ const TempPage = () => {
                             {
                                 pathList?.length === 0 ? (
                                     catsList?.map((item,index) => (
-                                        <Col 
-                                            key={item.id} 
-                                            span={4}>
-                                            <Card 
-                                                data={item}
-                                                id={item.id} 
-                                                onRoute={onRoute} 
-                                                label={item.title}
-                                                onSelect={(d) => {
-                                                    (item?.hasOwnProperty('is_sub_category') && item?.is_sub_category === '0') ? setTemp(d) : setSelected(d)
-                                                }}
-                                                />
-                                        </Col>
+                                        <Card 
+                                            data={item}
+                                            id={item.id} 
+                                            onRoute={onRoute} 
+                                            label={item.title}
+                                            onSelect={(d) => {
+                                                (item?.hasOwnProperty('is_sub_category') && item?.is_sub_category === '0') ? setTemp(d) : setSelected(d)
+                                            }}
+                                            />
                                     ))
                                 ) : (
                                     tempsList?.map((item,index) => (
-                                        <Col 
-                                            key={item.id} 
-                                            span={4}>
-                                            <Card 
-                                                data={item}
-                                                id={item.id} 
-                                                onRoute={onRoute} 
-                                                label={item.title}
-                                                onSelect={(d) => {
-                                                    (item?.hasOwnProperty('is_sub_category') && item?.is_sub_category === '0') ? setTemp(d) : setSelected(d)
-                                                }}
-                                                />
-                                        </Col>
+                                        <Card 
+                                            data={item}
+                                            id={item.id} 
+                                            onRoute={onRoute} 
+                                            label={item.title}
+                                            onSelect={(d) => {
+                                                (item?.hasOwnProperty('is_sub_category') && item?.is_sub_category === '0') ? setTemp(d) : setSelected(d)
+                                            }}
+                                            />
                                     ))
                                 )
                                 
                             }   
-
-
-
-                            {/* add */}
-                            <Col span={4}>
-                                <Card 
-                                    isAdd 
-                                    isCat={getParams(params)?.length === 0}
-                                    onAddCat={() => setModalCat(true)}  
-                                    onAddTemplate={() => setModalTemp(true)}  
-                                    />
-                            </Col>   
+                            <Card 
+                                isAdd 
+                                isCat={getParams(params)?.length === 0}
+                                onAddCat={() => setModalCat(true)}  
+                                onAddTemplate={() => setModalTemp(true)}  
+                                /> 
                         </>
                     )
                 }
+            </List>
+            <Row gutter={[12,12]}>
+                
                  
             </Row> 
         </div>

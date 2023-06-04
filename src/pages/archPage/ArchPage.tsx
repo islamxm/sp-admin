@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks/reduxHook';
 import ApiService from '../../service/ApiService';
 import ModalArchive from '../../modals/modalArchive/ModalArchive';
 import { PulseLoader } from 'react-spinners';
-
+import List from '../../components/List/List';
 
 const service = new ApiService()
 // const mock = ['Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку', 'Согласия на обработку']
@@ -59,7 +59,7 @@ const ArchPage = () => {
                     setArchModal(false)
                 }}
                 />
-            <Row gutter={[12,12]}>
+            <List>
                 {   
                     load ? (
                         <div className={styles.load}><PulseLoader color={"#383F56"}/></div>
@@ -67,30 +67,25 @@ const ArchPage = () => {
                         <>
                             {
                                 list?.map((item) => (
-                                    <Col span={4} key={item.id}>
-                                        <Card 
-                                            data={item}
-                                            onSelect={setSelected}
-                                            label={item.title}/>
-                                    </Col>
+                                    <Card 
+                                        data={item}
+                                        onSelect={setSelected}
+                                        label={item.title}/>
                                 ))
                                 
                             }
-                            {/* add */}
-                            <Col span={4}>
-                                <Card 
-                                    isAdd 
-                                    isCat
-                                    placeholder='Новый архив'
-                                    onAddCat={() => setArchModal(true)}
-                                    // onAddCat={() => setModalCat(true)}  
-                                    // onAddTemplate={() => setModalTemp(true)}  
-                                    />
-                            </Col>  
+                            <Card 
+                                isAdd 
+                                isCat
+                                placeholder='Новый архив'
+                                onAddCat={() => setArchModal(true)}
+                                // onAddCat={() => setModalCat(true)}  
+                                // onAddTemplate={() => setModalTemp(true)}  
+                                />
                         </> 
                     )
                 }   
-            </Row> 
+            </List> 
         </div>
     )
 }

@@ -1,0 +1,38 @@
+.wrapper {
+    height: 53px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    background-color: #fff;
+    padding: 5px 35px 5px 210px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .arch_info {
+        display: flex;
+        align-items: center;
+
+        .label {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 20px;
+            margin-right: 10px;
+        }
+        .value {
+            background: #F9F9F9;
+            border: 1px solid #F3F3F3;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 82px;
+            height: 28px;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 20px;
+        }
+    }
+}

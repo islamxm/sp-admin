@@ -305,7 +305,7 @@ const ModalTemplate:FC<I> = (props) => {
                 }
             </div>
             <div className={styles.body}>
-            <Row gutter={[15,15]}>
+            <Row align={'middle'} gutter={[15,15]}>
                 <Col span={24}>
                     <Input
                         value={title}
@@ -365,7 +365,7 @@ const ModalTemplate:FC<I> = (props) => {
                                     {
                                         inputs?.map((i, index) => (
                                             <Col span={24}>
-                                                <Row gutter={[12,12]}>
+                                                <Row align={'middle'} gutter={[12,12]}>
                                                     <Col span={4}>{i.keyword} -</Col>
                                                     <Col span={8}>
                                                         <Input 

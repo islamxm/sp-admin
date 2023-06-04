@@ -14,7 +14,7 @@ const Select = (props:ISelect) => {
                 label && <div className={styles.label}>{label}</div>
             }
             <div className={styles.select}>
-                <AntSelect {...props}/>
+                <AntSelect {...props} showSearch/>
             </div>
         </div>
     )

@@ -6,6 +6,7 @@ import { PulseLoader } from 'react-spinners';
 import { useAppSelector } from '../../hooks/reduxHook';
 import ApiService from '../../service/ApiService';
 import ModalStation from '../../modals/modalStation/ModalStation';
+import List from '../../components/List/List';
 const service = new ApiService()
 
 const StationsPage = () => {
@@ -50,7 +51,7 @@ const StationsPage = () => {
                 }}
                 />
 
-            <Row gutter={[12,12]}>
+            <List>
                 {   
                     load ? (
                         <div className={styles.load}><PulseLoader color={"#383F56"}/></div>
@@ -58,18 +59,16 @@ const StationsPage = () => {
                         <>
                             {
                                 list?.map((item) => (
-                                    <Col span={4} key={item.id}>
-                                        <Card 
+                                    <Card 
                                             data={item}
                                             onSelect={setSelected}
                                             label={item.title}/>
-                                    </Col>
                                 ))
                             }
                         </> 
                     )
                 }   
-            </Row> 
+            </List> 
         </div>
     )
 }

@@ -4,7 +4,7 @@ import { ICard } from './types';
 import { Row, Col } from 'antd';
 import IconButton from '../../../../components/IconButton/IconButton';
 import {MdEditDocument} from 'react-icons/md';
-
+import LinesEllipsis from 'react-lines-ellipsis'
 
 
 const Card:FC<ICard> = ({
@@ -57,19 +57,39 @@ const Card:FC<ICard> = ({
     return (
         <div  
             className={`${styles.wrapper} ${isAdd ? styles.add : ''}`}>
-            <div className={styles.action}>
-                <IconButton onClick={() => onSelect && onSelect(data)} icon={<MdEditDocument size={20}/>}/>
-            </div>
+            {/* {
+                data?.is_sub_category === '0' ? (
+                    null
+                ) : (
+                    <div onClick={() => onSelect && onSelect(data)} className={styles.action}>
+                        <MdEditDocument color='#fff' size={20}/>
+                    </div>
+                )
+            } */}
             <div 
-                onClick={() => {
-                    
-                    if(data?.is_sub_category === undefined || data?.is_sub_category === '1') {
-                        onRoute && onRoute(id)
-                    }
-                }}
+                
                 className={styles.in}>
-                <div className={styles.label}>
-                    {label}
+                {
+                    data?.is_sub_category === '0' ? null : (
+                        <div onClick={() => onSelect && onSelect(data)} className={styles.edit}>
+                            <MdEditDocument/>
+                        </div>
+                    )
+                }
+                <div 
+                    onClick={() => {
+                        
+                        if(data?.is_sub_category === undefined || data?.is_sub_category === '1') {
+                            onRoute && onRoute(id)
+                        }
+                        if(data?.is_sub_category === '0') {
+                            onSelect && onSelect(data)
+                        }
+                    }}
+                    className={styles.label}>
+                    <div className={styles.text}>
+                        <LinesEllipsis maxLine={2} text={label}/>
+                    </div>
                 </div>
             </div>
         </div>

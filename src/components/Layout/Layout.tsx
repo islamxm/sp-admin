@@ -3,6 +3,7 @@ import {FC, ReactNode, useEffect} from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import { useLocation } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 const Layout:FC<{children?: ReactNode}> = ({children}) => {
     const location = useLocation()
 
@@ -14,6 +15,7 @@ const Layout:FC<{children?: ReactNode}> = ({children}) => {
             <div className={`${styles.main}`}>
             {children}
             </div>
+            {location?.pathname === '/archive' && <Footer/>}
         </div>
     )
 }

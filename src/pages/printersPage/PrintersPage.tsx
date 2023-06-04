@@ -6,6 +6,7 @@ import Card from '../tempPage/components/Card/Card';
 import { PulseLoader } from 'react-spinners';
 import { useAppSelector } from '../../hooks/reduxHook';
 import ApiService from '../../service/ApiService';
+import List from '../../components/List/List';
 const service = new ApiService()
 
 const PrintersPage = () => {
@@ -50,7 +51,7 @@ const PrintersPage = () => {
                 }}
                 />
 
-            <Row gutter={[12,12]}>
+            <List>
                 {   
                     load ? (
                         <div className={styles.load}><PulseLoader color={"#383F56"}/></div>
@@ -58,27 +59,22 @@ const PrintersPage = () => {
                         <>
                             {
                                 list?.map((item) => (
-                                    <Col span={4} key={item.id}>
-                                        <Card 
-                                            data={item}
-                                            onSelect={setSelected}
-                                            label={item.name}/>
-                                    </Col>
+                                    <Card 
+                                        data={item}
+                                        onSelect={setSelected}
+                                        label={item.name}/>
                                 ))
                             }
-                            {/* add */}
-                            <Col span={4}>
-                                <Card 
-                                    isAdd 
-                                    isCat
-                                    placeholder='Новый принтер'
-                                    onAddCat={() => setModal(true)}
-                                    />
-                            </Col>  
+                            <Card 
+                                isAdd 
+                                isCat
+                                placeholder='Новый принтер'
+                                onAddCat={() => setModal(true)}
+                                />
                         </> 
                     )
                 }   
-            </Row> 
+            </List> 
         </div>
     )
 }

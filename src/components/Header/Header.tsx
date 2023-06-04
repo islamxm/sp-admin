@@ -11,7 +11,7 @@ const Header = () => {
         <div className={styles.wrapper}>
             
             <div className={styles.main}>
-                {location?.pathname?.includes('/templates') && <TempAction/>}
+                {/* {location?.pathname?.includes('/templates') && <TempAction/>} */}
             </div>
             {
                 location?.pathname !== 'auth' && <div className={styles.action}></div>
