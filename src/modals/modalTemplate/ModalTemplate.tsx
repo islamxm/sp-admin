@@ -69,6 +69,7 @@ const ModalTemplate:FC<I> = (props) => {
         setarchive_id('')
         setinputs([])
         setemployees([])
+        setDocprev('')
         onCancel && onCancel()
     }
 
