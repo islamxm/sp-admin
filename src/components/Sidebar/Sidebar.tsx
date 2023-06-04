@@ -61,9 +61,9 @@ const Sidebar = () => {
                         </Link>
                     ))
                 }
-                <div onClick={onLogout} className={styles.item}>
+                {/* <div onClick={onLogout} className={styles.item}>
                     Log out
-                </div>
+                </div> */}
             </div>
         </div>
     )

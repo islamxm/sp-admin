@@ -1,0 +1,27 @@
+.wrapper {
+    width: 175px;
+    background: #FFFFFF;
+    border: 1px solid rgba(42, 48, 66, 0.22);
+    border-radius: 11px;
+    overflow: hidden;
+
+    .item {
+        color: red;
+        display: flex;
+        align-items: center;
+        padding: 6px 12px;
+        transition: all .3s ease;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: var(--gray);
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+        }
+    }
+}
