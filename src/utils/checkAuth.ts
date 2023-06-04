@@ -1,11 +1,11 @@
 import LOCAL_STORAGE from "./localStorage"
 
-const checkAuth = async (response: Response) => {
-    if(response.status === 401) {
+const checkAuth = async (response: any) => {
+    if(response.error === true) {
         LOCAL_STORAGE.removeItem('sochi-park-admin-token')
         window.location.replace(window.location.origin + '/auth')
     } else {
-        return response.json()
+        return response
     }
 }
 
