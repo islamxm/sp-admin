@@ -3,7 +3,7 @@ import { IInput } from './types';
 import { FC } from 'react';
 
 const Input:FC<IInput> = (props) => {
-    const {label, fill} = props
+    const {label, fill, type = 'text'} = props
 
     return (
         <div className={`${styles.wrapper} ${fill ? styles.fill : ''}`}>
@@ -12,7 +12,7 @@ const Input:FC<IInput> = (props) => {
             }
             <input
                 {...props}
-                type='text'
+                type={type}
                 className={styles.input}
                 />
         </div>
