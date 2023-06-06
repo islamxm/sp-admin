@@ -122,6 +122,13 @@ const DocsPage = () => {
         onUpdate()
     }, [token])
 
+
+    const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if(e?.key === 'Enter' && e.which === 13) {
+            onUpdate()
+        }
+    }
+
     return (
         <div className={styles.wrapper}>
             <Row gutter={[20,20]}>
@@ -136,6 +143,7 @@ const DocsPage = () => {
                                                 placeholder='Поиск...'
                                                 fill
                                                 value={search}
+                                                onKeyDown={onEnter}
                                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setsearch(e.target.value)}
                                                 />
                                         </Col>
