@@ -173,6 +173,7 @@ const DocsPage = () => {
                                                 placeholder="Номер папки"
                                                 value={folder ? folder : null}
                                                 options={folderList}
+                                                onChange={setfolder}
                                                 />
                                         </Col>
                                         <Col span={4}>
@@ -181,22 +182,24 @@ const DocsPage = () => {
                                                 placeholder="Сотрудник"
                                                 value={employee ? employee : null}
                                                 options={empList}
+                                                onChange={setemployee}
                                                 />
                                         </Col>
-                                        <Col span={4}>
+                                        {/* <Col span={4}>
                                             <Select
                                                 label='Тип документа'
                                                 placeholder='Тип документа'
                                                 value={template_type ? template_type : null}
                                                 options={typesList}
                                                 />
-                                        </Col>
+                                        </Col> */}
                                         <Col span={4}>
                                             <Select
                                                 label='Шаблон документа'
                                                 placeholder="Шаблон документа"
                                                 value={template ? template : null}
                                                 options={tempList}
+                                                onChange={settemplate}
                                                 />
                                         </Col>
                                         <Col span={4}>
@@ -205,13 +208,15 @@ const DocsPage = () => {
                                                 placeholder="Дата от"
                                                 /> */}
                                             <DatePicker
+                                                placeholder='Выбрать дату'
                                                 fieldLabel='Дата от'
                                                 onChange={e => setstart_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
                                                 />
                                         </Col>
                                         <Col span={4}>
                                             <DatePicker
-                                                fieldLabel='Дата до'
+                                                fieldLabel='Выбрать дату'
+                                                placeholder='Дата до'
                                                 onChange={e => setend_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
                                                 />
                                         </Col>
