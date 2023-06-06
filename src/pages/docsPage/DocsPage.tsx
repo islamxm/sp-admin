@@ -23,7 +23,7 @@ const tableHead = [
         label: 'Документ'
     },
     {
-        label: 'Тип документа'
+        label: 'ФИО гостя'
     },
     {
         label: 'Сотрудник'
@@ -261,7 +261,7 @@ const DocsPage = () => {
                                                 <td className="table__item">{i.id}</td>
                                                 <td className="table__item">{i.folder}</td>
                                                 <td className="table__item">{i.title}</td>
-                                                <td className="table__item">{i.type}</td>
+                                                <td className="table__item">{i?.name ? i?.name : '-'}</td>
                                                 <td className="table__item">{i.employee}</td>
                                                 <td className="table__item">{i.archive}</td>
                                                 <td className="table__item">{getStatus(i.status)}</td>
