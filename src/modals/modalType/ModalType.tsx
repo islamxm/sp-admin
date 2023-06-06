@@ -15,7 +15,7 @@ const service = new ApiService()
 interface I extends ModalFuncProps {
     data?: any,
     onUpdate?: (...args: any[]) => any,
-
+    pathList?: string[]
     elementType: 1 | 2 
 }
 
@@ -25,7 +25,8 @@ const ModalType:FC<I> = (props) => {
         data, 
         onCancel, 
         onUpdate, 
-        elementType
+        elementType,
+        pathList
     } = props
 
     const {mainReducer: {token}} = useAppSelector(s => s)
@@ -33,15 +34,7 @@ const ModalType:FC<I> = (props) => {
     const [delLoad, setDelLoad] = useState(false)
 
     const [title, setTitle] = useState('')
-    // const [picture, setPicture] = useState<Blob | null>(null)
-    // const [preview, setPreview] = useState('')
 
-
-    // useEffect(() => {
-    //     if(picture) {
-    //         setPreview(URL.createObjectURL(picture))
-    //     } else setPreview('')
-    // }, [picture])
     
 
     useEffect(() => {
@@ -62,12 +55,6 @@ const ModalType:FC<I> = (props) => {
                     const body = new FormData()
                     body.append('title', title)
                     body.append('category_id', data?.id)
-                    // if(picture) {
-                    //     body.append('thumbnail_picture', picture)
-                    // }
-                    // if(!preview && !picture) {
-                    //     body.append('thumbnail_picture', '')
-                    // }
                     service.editCat(body,token).then(res => {
                         if(res?.error === false) {
                             onUpdate && onUpdate()
@@ -93,8 +80,58 @@ const ModalType:FC<I> = (props) => {
                 }
             }
             if(elementType === 2) {
-                setLoad(false)
-                alert('NO_FUNC_GN')
+                if(pathList) {
+                    if(data) {
+                        const body = new FormData()
+                            body.append('title', title)
+                            body.append('sub_category_id', data?.id)
+                            service.editSubcat(body,token).then(res => {
+                                if(res?.error === false) {
+                                    onUpdate && onUpdate()
+                                    onClose()
+                                } else {
+                                    alert('Произошла ошибка')
+                                }
+                            }).finally(() => {
+                                setLoad(false)
+                            })
+                    } else {
+                        if(pathList?.length === 1) {
+                            const body = new FormData()
+                            body.append('title', title)
+                            body.append('category_id', pathList[0])
+                            body.append('parent_id', '0')
+                            service.addSubcat(body,token).then(res => {
+                                if(res?.error === false) {
+                                    onUpdate && onUpdate()
+                                    onClose()
+                                } else {
+                                    alert('Произошла ошибка')
+                                }
+                            }).finally(() => {
+                                setLoad(false)
+                            })
+                        } 
+                        if(pathList?.length > 1) {
+                            const body = new FormData()
+                            body.append('title', title)
+                            body.append('category_id', pathList[0])
+                            body.append('parent_id', pathList[pathList?.length - 1])
+                            service.addSubcat(body,token).then(res => {
+                                if(res?.error === false) {
+                                    onUpdate && onUpdate()
+                                    onClose()
+                                } else {
+                                    alert('Произошла ошибка')
+                                }
+                            }).finally(() => {
+                                setLoad(false)
+                            })
+                            
+                        }
+                    }
+                }
+                
             }
             
         }
@@ -103,19 +140,37 @@ const ModalType:FC<I> = (props) => {
 
     const onDelete = () => {
         if(data && token) {
-            setDelLoad(true)
-            const body = new FormData()
-            body.append('category_id', data?.id)
-            service.deleteCat(body, token).then(res => {
-                if(res?.error === false) {
-                    onUpdate && onUpdate()
-                    onClose() 
-                } else {
-                    alert('Произошла ошибка')
-                }
-            }).finally(() => {
-                setDelLoad(false)
-            })
+            if(elementType === 1) {
+                setDelLoad(true)
+                const body = new FormData()
+                body.append('category_id', data?.id)
+                service.deleteCat(body, token).then(res => {
+                    if(res?.error === false) {
+                        onUpdate && onUpdate()
+                        onClose() 
+                    } else {
+                        alert('Произошла ошибка')
+                    }
+                }).finally(() => {
+                    setDelLoad(false)
+                })
+            } 
+            if(elementType === 2) {
+                setDelLoad(true)
+                const body = new FormData()
+                body.append('sub_category_id', data?.id)
+                service.deleteSubcat(body, token).then(res => {
+                    if(res?.error === false) {
+                        onUpdate && onUpdate()
+                        onClose() 
+                    } else {
+                        alert('Произошла ошибка')
+                    }
+                }).finally(() => {
+                    setDelLoad(false)
+                })
+            }
+            
         }
     }
 

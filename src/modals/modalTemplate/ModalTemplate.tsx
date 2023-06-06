@@ -21,7 +21,7 @@ const service = new ApiService()
 interface I extends ModalFuncProps {
 
     data?: any,
-    onUpdate?: (...args: any[]) => any
+    onUpdate?: (...args: any[]) => any,
 }
 
 
@@ -29,7 +29,7 @@ const ModalTemplate:FC<I> = (props) => {
     const {
         data,
         onUpdate,
-        onCancel
+        onCancel,
     } = props
     const {mainReducer: {token}} = useAppSelector(s => s)
     const [params, setParams] = useSearchParams()

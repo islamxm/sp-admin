@@ -480,6 +480,54 @@ class ApiService {
             console.log(err)
         }
     }
+
+    addSubcat = async (body:FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.addSubcat, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    editSubcat = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.editSubcat, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    deleteSubcat = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.deleteSubcat, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 
