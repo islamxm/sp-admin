@@ -51,6 +51,16 @@ const sortList = [
     {value: 'content ', label: 'Контент'},
 ]
 
+const getStatus = (status: string) => {
+    if(status === '1') {
+        return "Создано"
+    }
+    if(status === '0') {
+        return 'Отозвано'
+    }
+    return null
+}
+
 
 const DocsPage = () => {
     const {mainReducer: {token}} = useAppSelector(s => s)
@@ -75,6 +85,11 @@ const DocsPage = () => {
     const [start_date, setstart_date] = useState('')
     const [end_date, setend_date] = useState('')
 
+    // useEffect(() => {
+
+    // }, [l])
+
+    
 
     const onUpdate = () => {
         if(token) { 
@@ -236,7 +251,7 @@ const DocsPage = () => {
                                                 <td className="table__item">{i.type}</td>
                                                 <td className="table__item">{i.employee}</td>
                                                 <td className="table__item">{i.archive}</td>
-                                                <td className="table__item">{i.status === '1' ? 'Отозван' : 'Не отозван'}</td>
+                                                <td className="table__item">{getStatus(i.status)}</td>
                                                 <td className="table__item">{i.date}</td>
                                                 <td className="table__item">{'-'}</td>
                                             </tr>
