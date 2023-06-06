@@ -30,7 +30,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -47,7 +48,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -62,7 +64,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -77,7 +80,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -93,7 +97,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -108,7 +113,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -148,7 +154,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -164,7 +171,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -180,7 +188,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -195,7 +204,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -209,7 +219,8 @@ class ApiService {
                     'Authorization': token
                 }
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         } 
@@ -224,7 +235,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         } 
@@ -239,7 +251,8 @@ class ApiService {
                     'Authorization': token
                 },
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -253,7 +266,8 @@ class ApiService {
                     'Authorization': token
                 },
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -267,7 +281,8 @@ class ApiService {
                     'Authorization': token
                 },
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -282,7 +297,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -297,7 +313,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -313,7 +330,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -328,7 +346,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -343,7 +362,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -359,7 +379,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -374,7 +395,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -389,7 +411,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
@@ -404,7 +427,8 @@ class ApiService {
                 },
                 body
             })
-            return await checkAuth(res?.json())
+            const r = await res?.json()
+            return await checkAuth(r)
         } catch(err) {
             console.log(err)
         }
