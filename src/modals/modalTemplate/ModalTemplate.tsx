@@ -129,7 +129,6 @@ const ModalTemplate:FC<I> = (props) => {
 
     useEffect(() => { 
         if(data) {
-            console.log(data)
             if(token) {
                 const body = new FormData()
                 body.append('template_id', data?.id)

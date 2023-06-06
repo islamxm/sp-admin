@@ -187,7 +187,7 @@ const DocsPage = () => {
                                     </Row>
                                 </Col>
                                 <Col span={24}>
-                                    <Row gutter={[12,12]}>
+                                    <Row align={'middle'} gutter={[12,12]}>
                                         <Col span={4}>
                                             <Select
                                                 label='Номер папки'
@@ -231,11 +231,13 @@ const DocsPage = () => {
                                             <DatePicker
                                                 placeholder='Выбрать дату'
                                                 fieldLabel='Дата от'
+                                                style={{width: '100%'}}
                                                 onChange={e => setstart_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
                                                 />
                                         </Col>
                                         <Col span={4}>
                                             <DatePicker
+                                                style={{width: '100%'}}
                                                 fieldLabel='Выбрать дату'
                                                 placeholder='Дата до'
                                                 onChange={e => setend_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
@@ -293,34 +295,38 @@ const DocsPage = () => {
                                                             {
                                                                 i?.status === '1' && (
                                                                     <IconButton
+                                                                        size={20}
                                                                         onClick={() => onDocStatusChange(i.id, '2')} 
-                                                                        icon={<RiArrowGoBackFill/>}/>
+                                                                        icon={<RiArrowGoBackFill size={20}/>}/>
                                                                 )
                                                             }
                                                             {
                                                                 i?.status === '2' && (
                                                                     <IconButton 
+                                                                        size={20}
                                                                         onClick={() => onDocStatusChange(i.id, '1')}
                                                                         variant={'danger'} 
-                                                                        icon={<IoCloseCircleOutline/>}/>
+                                                                        icon={<IoCloseCircleOutline size={20}/>}/>
                                                                 )
                                                             }
                                                         </div>
                                                         <div className={styles.table_action_item}>
                                                             <IconButton
+                                                                size={20}
                                                                 onClick={() => printJS(i?.document_url)}
                                                                 variant={'black'}
-                                                                icon={<HiOutlinePrinter/>}
+                                                                icon={<HiOutlinePrinter size={20}/>}
                                                                 />
                                                         </div>
                                                         {
                                                             i?.document_url && (
                                                                 <div className={styles.table_action_item}>
                                                                     <IconLink
+                                                                        size={20}
                                                                         href={i?.document_url}
                                                                         download={i?.document_url}
                                                                         variant={'black'}
-                                                                        icon={<FiDownload/>}
+                                                                        icon={<FiDownload size={20}/>}
                                                                         />
                                                                 </div>
                                                             )   

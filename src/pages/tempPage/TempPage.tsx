@@ -40,7 +40,6 @@ const TempPage = () => {
             setLoad(true)
             service.getCats(token).then(res => {
                 setCatsList(res?.categories)
-                console.log(res)
             }).finally(() => {
                 setLoad(false)
             })
