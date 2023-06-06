@@ -59,15 +59,7 @@ const sortList = [
     {value: 'content ', label: 'Контент'},
 ]
 
-const getStatus = (status: string) => {
-    if(status === '1') {
-        return "Создано"
-    }
-    if(status === '2') {
-        return 'Отозвано'
-    }
-    return null
-}
+
 
 
 const DocsPage = () => {
@@ -97,7 +89,15 @@ const DocsPage = () => {
 
     // }, [l])
 
-    
+    const getStatus = (status: string) => {
+        if(status === '1') {
+            return "Создано"
+        }
+        if(status === '2') {
+            return 'Отозвано'
+        }
+        return null
+    }
 
     const onUpdate = () => {
         if(token) { 
@@ -115,9 +115,7 @@ const DocsPage = () => {
             body.append('end_date', end_date)            
 
             service.getDocs(body, token).then(res => {
-                console.log(res?.documents)
                 setList(res?.documents)
-
                 setFolderList(res?.folders?.map((i: any) => ({value: i.id, label: i.id})))
                 setEmpList(res?.employees?.map((i: any) => ({value: i.id, label: i.name})))
                 setTypesList(res?.types?.map((i: any) => ({value: i.id, label: i.title})))
@@ -142,13 +140,35 @@ const DocsPage = () => {
         body.append('document_id', document_id)
         body.append('status_id', status_id)
         if(token) {
-            console.log(token)
             service.changeDocStatus(body,token).then(res => {
-                console.log(res)
+                if(res?.error === false) {
+                    if(status_id === '1') {
+                        setList(s => {
+                            const m = s;
+                            const index = m.findIndex(i => i.id == document_id)
+                            const obj = m.find(i => i.id == document_id)
+
+                            const rm = m.splice(index, 1, {...obj, status: '1'})
+                            return [...m]
+                        })
+                    }
+                    if(status_id === '2') {
+                        setList(s => {
+                            const m = s;
+                            const index = m.findIndex(i => i.id == document_id)
+                            const obj = m.find(i => i.id == document_id)
+
+                            const rm = m.splice(index, 1, {...obj, status: '2'})
+                            return [...m]
+                        })
+                    }
+                }
+                
             })
         }
         
     }
+
 
     return (
         <div className={styles.wrapper}>
@@ -292,7 +312,7 @@ const DocsPage = () => {
                                                 <td className="table__item">
                                                     <div className={styles.table_action}>
                                                         <div className={styles.table_action_item}>
-                                                            {
+                                                            {/* {
                                                                 i?.status === '1' && (
                                                                     <IconButton
                                                                         size={20}
@@ -308,7 +328,29 @@ const DocsPage = () => {
                                                                         variant={'danger'} 
                                                                         icon={<IoCloseCircleOutline size={20}/>}/>
                                                                 )
-                                                            }
+                                                            } */}
+                                                            <IconButton 
+                                                                size={20}
+                                                                onClick={() => {
+                                                                    if(i?.status === '2') {
+                                                                        onDocStatusChange(i.id, '1')
+                                                                    } 
+                                                                    if(i?.status === '1') {
+                                                                        onDocStatusChange(i.id, '2')
+                                                                    }
+                                                                }}
+                                                                variant={i?.status === '2' ? 'danger' : 'default'} 
+                                                                icon={i?.status === '2' ? <IoCloseCircleOutline size={20}/> : <RiArrowGoBackFill size={20}/>}/>
+                                                            {/* <div
+                                                                onClick={() => {
+                                                                    if(i?.status === '2') {
+                                                                        onDocStatusChange(i.id, '1')
+                                                                    } 
+                                                                    if(i?.status === '1') {
+                                                                        onDocStatusChange(i.id, '2')
+                                                                    }
+                                                                }}
+                                                                >{i.status}</div> */}
                                                         </div>
                                                         <div className={styles.table_action_item}>
                                                             <IconButton
