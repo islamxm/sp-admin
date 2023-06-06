@@ -3,7 +3,7 @@ import { HTMLProps, ReactNode } from "react";
 export interface IIconButton extends HTMLProps<HTMLButtonElement> {
     icon: ReactNode,
     variant?: iconButtonVariants
-    iconSize?: number | string
+    iconSize?: number | string,
 }
 
 

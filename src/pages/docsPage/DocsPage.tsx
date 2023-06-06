@@ -9,6 +9,14 @@ import ApiService from '../../service/ApiService';
 import { PulseLoader } from 'react-spinners';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import moment from 'moment';
+import IconButton from '../../components/IconButton/IconButton';
+import {IoCloseCircleOutline} from 'react-icons/io5';
+import {HiOutlinePrinter} from 'react-icons/hi';
+import {RiArrowGoBackFill} from 'react-icons/ri';
+import {FiDownload} from 'react-icons/fi'
+import printJS from 'print-js';
+import IconLink from '../../components/IconLink/IconLink';
+
 
 const service = new ApiService()
 
@@ -55,7 +63,7 @@ const getStatus = (status: string) => {
     if(status === '1') {
         return "Создано"
     }
-    if(status === '0') {
+    if(status === '2') {
         return 'Отозвано'
     }
     return null
@@ -127,6 +135,19 @@ const DocsPage = () => {
         if(e?.key === 'Enter' && e.which === 13) {
             onUpdate()
         }
+    }
+
+    const onDocStatusChange = (document_id: string, status_id: string) => {
+        const body = new FormData()
+        body.append('document_id', document_id)
+        body.append('status_id', status_id)
+        if(token) {
+            console.log(token)
+            service.changeDocStatus(body,token).then(res => {
+                console.log(res)
+            })
+        }
+        
     }
 
     return (
@@ -266,7 +287,47 @@ const DocsPage = () => {
                                                 <td className="table__item">{i.archive}</td>
                                                 <td className="table__item">{getStatus(i.status)}</td>
                                                 <td className="table__item">{i.date}</td>
-                                                <td className="table__item">{'-'}</td>
+                                                <td className="table__item">
+                                                    <div className={styles.table_action}>
+                                                        <div className={styles.table_action_item}>
+                                                            {
+                                                                i?.status === '1' && (
+                                                                    <IconButton
+                                                                        onClick={() => onDocStatusChange(i.id, '2')} 
+                                                                        icon={<RiArrowGoBackFill/>}/>
+                                                                )
+                                                            }
+                                                            {
+                                                                i?.status === '2' && (
+                                                                    <IconButton 
+                                                                        onClick={() => onDocStatusChange(i.id, '1')}
+                                                                        variant={'danger'} 
+                                                                        icon={<IoCloseCircleOutline/>}/>
+                                                                )
+                                                            }
+                                                        </div>
+                                                        <div className={styles.table_action_item}>
+                                                            <IconButton
+                                                                onClick={() => printJS(i?.document_url)}
+                                                                variant={'black'}
+                                                                icon={<HiOutlinePrinter/>}
+                                                                />
+                                                        </div>
+                                                        {
+                                                            i?.document_url && (
+                                                                <div className={styles.table_action_item}>
+                                                                    <IconLink
+                                                                        href={i?.document_url}
+                                                                        download={i?.document_url}
+                                                                        variant={'black'}
+                                                                        icon={<FiDownload/>}
+                                                                        />
+                                                                </div>
+                                                            )   
+                                                        }
+                                                        
+                                                    </div>
+                                                </td>
                                             </tr>
                                         ))
                                     }

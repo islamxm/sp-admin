@@ -57,6 +57,12 @@ const endpoints = {
 
 
     getDocs: `${PATH}admin/get_documents.php`,
+
+    changeDocStatus: `${PATH}admin/change_status.php`,
+
+
+    getFolderCount: `${PATH}admin/get_folder_count.php`,
+    setFolderCount: `${PATH}admin/set_folder_count.php`
 }   
 
 export default endpoints;

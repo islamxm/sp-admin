@@ -28,11 +28,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 82px;
+            // width: 82px;
             height: 28px;
             font-weight: 700;
             font-size: 15px;
             line-height: 20px;
+        }
+        .action {
+            margin-left: 10px;
         }
     }
 }

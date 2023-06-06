@@ -433,6 +433,53 @@ class ApiService {
             console.log(err)
         }
     }
+
+    changeDocStatus = async (body:FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.changeDocStatus, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    getFolderCount = async (token: any) => {
+        try {
+            let res = await fetch(endpoints.getFolderCount, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    setFolderCount = async (body:FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.setFolderCount, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 

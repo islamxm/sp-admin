@@ -35,6 +35,8 @@
     &:disabled {
         filter: grayscale(1);
         opacity: .6;
+        pointer-events: none;
+        touch-action: none;
     }
 }
 

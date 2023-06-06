@@ -1,0 +1,29 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 100%;
+    font-size: 100%;
+    flex: 0 0 auto;
+    transition: all .3s ease;
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    &:hover {
+        opacity: .7;
+    }
+}
+
+.wrapper.danger {
+    color: var(--red) !important;
+}
+
+.wrapper.black {
+    color: #575757 !important;
+}
+
+.wrapper.default {
+    color: var(--blue) !important;
+}
