@@ -111,10 +111,10 @@ const DocsPage = () => {
             const body = new FormData() 
             body.append('search', search)
             body.append('search_by', search_by)
-            body.append('folder', folder)
-            body.append('employee', employee)
+            body.append('folder', folder !== 'all' ? folder : '')
+            body.append('employee', employee !== 'all' ? employee : '')
             body.append('template_type', template_type)
-            body.append('template', template)
+            body.append('template', template !== 'all' ? template : '')
             body.append('archive', archive)
             body.append('status', status)
             body.append('start_date', start_date)
@@ -122,10 +122,25 @@ const DocsPage = () => {
 
             service.getDocs(body, token).then(res => {
                 setList(res?.documents)
-                setFolderList(res?.folders?.map((i: any) => ({value: i.id, label: i.id})))
-                setEmpList(res?.employees?.map((i: any) => ({value: i.id, label: i.name})))
+                setFolderList(
+                    [
+                        {value: 'all', label: 'Все'},
+                        ...res?.folders?.map((i: any) => ({value: i.id, label: i.id})),
+                    ]
+                )
+                setEmpList(
+                    [
+                        {value: 'all', label: 'Все'},
+                        ...res?.employees?.map((i: any) => ({value: i.id, label: i.name}))
+                    ]
+                )
                 setTypesList(res?.types?.map((i: any) => ({value: i.id, label: i.title})))
-                setTempList(res?.templates?.map((i: any) => ({value: i.id, label: i.title})))
+                setTempList(
+                    [
+                        {value: 'all', label: 'Все'},
+                        ...res?.templates?.map((i: any) => ({value: i.id, label: i.title}))
+                    ]
+                )
             }).finally(() => setLoad(false))
         }
     }
