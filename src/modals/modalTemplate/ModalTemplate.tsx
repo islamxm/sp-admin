@@ -395,7 +395,7 @@ const ModalTemplate:FC<I> = (props) => {
                                                             />
                                                     </Col>
                                                     <Col span={6}>
-                                                        <span style={{marginRight: 10}}>Обьязательно</span>
+                                                        <span style={{marginRight: 10}}>Объязательно</span>
                                                         <Checkbox
                                                             onChange={e => {
                                                                 if(e.target.checked) {

@@ -304,6 +304,7 @@ const DocsPage = () => {
                                                 fieldLabel='Дата от'
                                                 style={{width: '100%'}}
                                                 onChange={e => setstart_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
+                                                
                                                 />
                                         </Col>
                                         <Col span={4}>
@@ -390,8 +391,8 @@ const DocsPage = () => {
                                                                         onDocStatusChange(i.id, '2')
                                                                     }
                                                                 }}
-                                                                variant={i?.status === '2' ? 'danger' : 'default'} 
-                                                                icon={i?.status === '2' ? <IoCloseCircleOutline size={20}/> : <RiArrowGoBackFill size={20}/>}/>
+                                                                variant={i?.status === '2' ? 'default' : 'danger'} 
+                                                                icon={i?.status === '2' ? <RiArrowGoBackFill size={20}/> : <IoCloseCircleOutline size={20}/>}/>
                                                             {/* <div
                                                                 onClick={() => {
                                                                     if(i?.status === '2') {
