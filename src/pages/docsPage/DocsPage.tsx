@@ -16,6 +16,7 @@ import {RiArrowGoBackFill} from 'react-icons/ri';
 import {FiDownload} from 'react-icons/fi'
 import printJS from 'print-js';
 import IconLink from '../../components/IconLink/IconLink';
+import ModalConfirm from '../../modals/modalConfirm/ModalConfirm';
 
 
 const service = new ApiService()
@@ -66,6 +67,9 @@ const DocsPage = () => {
     const {mainReducer: {token}} = useAppSelector(s => s)
     const [load, setLoad] = useState(false)
 
+    const [modal, setModal] = useState(false)
+    const [modalLoad, setModalLoad] = useState(false)
+
     const [folderList, setFolderList] = useState<any[]>([])
     const [empList, setEmpList] = useState<any[]>([])
     const [typesList, setTypesList] = useState<any[]>([])
@@ -84,6 +88,8 @@ const DocsPage = () => {
     const [status, setstatus] = useState('')
     const [start_date, setstart_date] = useState('')
     const [end_date, setend_date] = useState('')
+
+    const [selectedDoc, setSelectedDoc] = useState<{docId: string, statusId: string}>({docId: '', statusId: ''})
 
     // useEffect(() => {
 
@@ -136,13 +142,18 @@ const DocsPage = () => {
     }
 
     const onDocStatusChange = (document_id: string, status_id: string) => {
-        const body = new FormData()
-        body.append('document_id', document_id)
-        body.append('status_id', status_id)
-        if(token) {
-            service.changeDocStatus(body,token).then(res => {
-                if(res?.error === false) {
-                    if(status_id === '1') {
+        
+
+        if(status_id === '2') {
+            setModal(true)
+            setSelectedDoc({docId: document_id, statusId: status_id})
+        } else {
+            const body = new FormData()
+            body.append('document_id', document_id)
+            body.append('status_id', status_id)
+            if(token) {
+                service.changeDocStatus(body,token).then(res => {
+                    if(res?.error === false) {
                         setList(s => {
                             const m = s;
                             const index = m.findIndex(i => i.id == document_id)
@@ -152,26 +163,51 @@ const DocsPage = () => {
                             return [...m]
                         })
                     }
-                    if(status_id === '2') {
+                    
+                })
+            }
+        }
+        
+        
+    }
+
+    const onStatus2 = () => {
+        if(token) {
+            setModalLoad(true)
+            const body = new FormData()
+            body.append('document_id', selectedDoc?.docId)
+            body.append('status_id', selectedDoc?.statusId)
+            service.changeDocStatus(body,token).then(res => {
+                if(res?.error === false) {
+                    if(selectedDoc?.docId && selectedDoc?.statusId) {
                         setList(s => {
                             const m = s;
-                            const index = m.findIndex(i => i.id == document_id)
-                            const obj = m.find(i => i.id == document_id)
-
+                            const index = m.findIndex(i => i.id == selectedDoc?.docId)
+                            const obj = m.find(i => i.id == selectedDoc?.docId)
+    
                             const rm = m.splice(index, 1, {...obj, status: '2'})
                             return [...m]
                         })
                     }
+                    
                 }
-                
+            }).finally(() => {
+                setModal(false)
+                setModalLoad(false)
             })
         }
-        
     }
 
 
     return (
         <div className={styles.wrapper}>
+            <ModalConfirm
+                open={modal}
+                onCancel={() => setModal(false)}
+                onConfirm={onStatus2}
+                load={modalLoad}
+                head='Вы уверены что хотитет отозвать документ?'
+                />
             <Row gutter={[20,20]}>
                 <Col span={24}>
                     <div className={styles.top}>
