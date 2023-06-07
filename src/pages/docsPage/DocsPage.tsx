@@ -25,25 +25,25 @@ const tableHead = [
         label: 'ID',
     },
     {
+        label: 'Архив'
+    },
+    {
         label: 'Папка'
     },
     {
         label: 'Документ'
     },
     {
-        label: 'ФИО гостя'
-    },
-    {
         label: 'Сотрудник'
     },
     {
-        label: 'Архив'
-    },
-    {
-        label: 'Статус'
+        label: 'Субъект' //фИО ГОСТЯ
     },
     {
         label: 'Дата'
+    },
+    {
+        label: 'Статус'
     },
     {
         label: 'Действие'
@@ -302,13 +302,13 @@ const DocsPage = () => {
                                         list?.map((i,index) => (
                                             <tr className='table__row'>
                                                 <td className="table__item">{i.id}</td>
+                                                <td className="table__item">{i.archive}</td>
                                                 <td className="table__item">{i.folder}</td>
                                                 <td className="table__item">{i.title}</td>
-                                                <td className="table__item">{i?.name ? i?.name : '-'}</td>
                                                 <td className="table__item">{i.employee}</td>
-                                                <td className="table__item">{i.archive}</td>
-                                                <td className="table__item">{getStatus(i.status)}</td>
+                                                <td className="table__item">{i?.name ? i?.name : '-'}</td>
                                                 <td className="table__item">{i.date}</td>
+                                                <td className="table__item">{getStatus(i.status)}</td>
                                                 <td className="table__item">
                                                     <div className={styles.table_action}>
                                                         <div className={styles.table_action_item}>
