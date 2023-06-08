@@ -106,7 +106,7 @@ const DocsPage = () => {
 
     const [offset, setoffset] = useState(0)
     const [limit, setlimit] = useState(20)
-    const [order, setorder] = useState<'ASC' | 'DESC'>('ASC')
+    const [order, setorder] = useState<'ASC' | 'DESC'>('DESC')
     const [order_by, setorder_by] = useState('id')
     const [total, settotal] = useState(0)
 
@@ -239,13 +239,18 @@ const DocsPage = () => {
 
     const onOrder = (value?: string) => {
         value && setorder_by(value)
-        setorder(s => {
-            if(s === 'ASC') {
-                return 'DESC'
-            } else {
-                return 'ASC'
-            }
-        })
+        if(value === order_by) {
+            setorder(s => {
+                if(s === 'ASC') {
+                    return 'DESC'
+                } else {
+                    return 'ASC'
+                }
+            })
+        } else {
+            setorder('DESC')
+        }
+        
     }
 
 
