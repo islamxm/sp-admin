@@ -293,10 +293,11 @@ const DocsPage = () => {
 
             setReportPrintLoad(true)
             service.reportPrint(body, token).then(res => {
-                // window.open(res)
-                console.log(res)
-                printJS(res?.file_url, 'html')
-                
+                if(res?.file_url) {
+                    printJS(res?.file_url, 'html')
+                } else {
+                    alert('Произошла ошибка')
+                }
             }).finally(() => {
                 setReportPrintLoad(false)
             })
@@ -321,9 +322,10 @@ const DocsPage = () => {
             body.append('email', email)
             setReportMailLoad(true)
             service.reportSendMail(body,token).then(res => {
-                console.log(res)
                 if(res?.error === false) {
                     alert(`Отчет отправлен на вашу почту: ${email}`)
+                } else {
+                    alert('Произошла ошибка')
                 }
             }).finally(() => {
                 setReportMailLoad(false)
