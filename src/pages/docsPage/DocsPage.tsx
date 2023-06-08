@@ -132,6 +132,8 @@ const DocsPage = () => {
 
     const [isReport, setIsReport] = useState(false)
 
+
+    const [print, setPrint] = useState<null | string>(null)
     // useEffect(() => {
 
     // }, [l])
@@ -293,8 +295,9 @@ const DocsPage = () => {
 
             setReportPrintLoad(true)
             service.reportPrint(body, token).then(res => {
+                console.log(res)
                 if(res?.file_url) {
-                    printJS(res?.file_url, 'html')
+                    window.open(res?.file_url)
                 } else {
                     alert('Произошла ошибка')
                 }
@@ -303,6 +306,7 @@ const DocsPage = () => {
             })
         }
     }
+
 
     const onSendToEmail = () => {
         if(token) {
@@ -343,6 +347,7 @@ const DocsPage = () => {
                 head='Вы уверены что хотитет отозвать документ?'
                 />
             <Row gutter={[20,20]}>
+                
                 <Col span={24}>
                     <div className={styles.top}>
                         <div className={styles.body}>
