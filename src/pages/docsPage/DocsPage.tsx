@@ -73,6 +73,22 @@ const sortList = [
     {value: 'content ', label: 'Контент'},
 ]
 
+const statusList = [
+    {
+        label: 'Все',
+        value: 'All',
+    },
+    {
+        label: 'Отозван',
+        value: '2'
+    },
+    {
+        label: 'Не отозван',
+        value: '1'
+    }
+
+]
+
 
 
 
@@ -102,7 +118,7 @@ const DocsPage = () => {
     const [template_type, settemplate_type] = useState('')
     const [template, settemplate] = useState('')
     const [archive, setarchive] = useState('')
-    const [status, setstatus] = useState('')
+    const [status, setstatus] = useState(statusList[0].value)
     const [start_date, setstart_date] = useState('')
     const [end_date, setend_date] = useState('')
 
@@ -141,7 +157,7 @@ const DocsPage = () => {
             body.append('template_type', template_type)
             body.append('template', template !== 'all' ? template : '')
             body.append('archive', archive)
-            body.append('status', status)
+            body.append('status', status === 'All' ? '' : status)
             body.append('start_date', start_date)
             body.append('end_date', end_date)   
             body.append('order', order)
@@ -269,7 +285,7 @@ const DocsPage = () => {
             body.append('template_type', template_type)
             body.append('template', template !== 'all' ? template : '')
             body.append('archive', archive)
-            body.append('status', status)
+            body.append('status', status === 'all' ? '' : status)
             body.append('start_date', start_date)
             body.append('end_date', end_date)   
             body.append('order', order)
@@ -279,7 +295,7 @@ const DocsPage = () => {
             service.reportPrint(body, token).then(res => {
                 // window.open(res)
                 console.log(res)
-                printJS(res?.file_url)
+                printJS(res?.file_url, 'html')
                 
             }).finally(() => {
                 setReportPrintLoad(false)
@@ -297,7 +313,7 @@ const DocsPage = () => {
             body.append('template_type', template_type)
             body.append('template', template !== 'all' ? template : '')
             body.append('archive', archive)
-            body.append('status', status)
+            body.append('status', status === 'all' ? '' : status)
             body.append('start_date', start_date)
             body.append('end_date', end_date)   
             body.append('order', order)
@@ -426,13 +442,20 @@ const DocsPage = () => {
                                                 />
                                         </Col>
                                         <Col span={4}>
-                                            <span style={{marginRight: 10}}>Отозван</span>
+                                            {/* <span style={{marginRight: 10}}>Отозван</span>
                                             <Checkbox
                                                 style={{marginBottom: 8}}
                                                 id='status'
                                                 checked={status === '1'}
                                                 onChange={(e) => e.target.checked ? setstatus('1') : setstatus('0')}
-                                                />
+                                                /> */}
+                                                <Select
+                                                    label='Статус'
+                                                    placeholder='Статус'
+                                                    options={statusList}
+                                                    value={status}
+                                                    onChange={setstatus}
+                                                    />
                                         </Col>
                                     </Row>
                                 </Col>
