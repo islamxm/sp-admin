@@ -25,6 +25,7 @@ const ModalEmp:FC<I> = (props) => {
 
     const onSave = () => {
         selectEmp && selectEmp(selected)
+        
         onClose()
     }
 
