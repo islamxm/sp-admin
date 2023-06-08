@@ -560,6 +560,38 @@ class ApiService {
             console.log(err)
         }
     }
+
+    reportSendMail = async (body:FormData,token: any) => {
+        try {
+            let res = await fetch(endpoints.reportSendMail, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    reportPrint = async (body:FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.reportPrint, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 

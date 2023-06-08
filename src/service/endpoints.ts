@@ -70,6 +70,9 @@ const endpoints = {
     editTerminal: `${PATH}admin/terminals/change_terminal.php`,
     deleteTerminal: `${PATH}admin/terminals/delete_terminal.php`,
 
+    reportSendMail: `${PATH}admin/send_report_email.php`,
+    reportPrint: `${PATH}admin/print_report.php`
+
     
 }
 export default endpoints;

@@ -79,9 +79,13 @@ const sortList = [
 const DocsPage = () => {
     const {mainReducer: {token}} = useAppSelector(s => s)
     const [load, setLoad] = useState(false)
+    const [reportMailLoad, setReportMailLoad] = useState(false)
+    const [reportPrintLoad, setReportPrintLoad] = useState(false)
 
     const [modal, setModal] = useState(false)
     const [modalLoad, setModalLoad] = useState(false)
+
+    const [email, setEmail] = useState('')
 
     const [folderList, setFolderList] = useState<any[]>([])
     const [empList, setEmpList] = useState<any[]>([])
@@ -109,6 +113,8 @@ const DocsPage = () => {
     const [order, setorder] = useState<'ASC' | 'DESC'>('DESC')
     const [order_by, setorder_by] = useState('id')
     const [total, settotal] = useState(0)
+
+    const [isReport, setIsReport] = useState(false)
 
     // useEffect(() => {
 
@@ -253,7 +259,61 @@ const DocsPage = () => {
         
     }
 
-    useEffect(() => console.log(end_date), [end_date])
+    const onPrint = () => {
+        if(token) {
+            const body = new FormData() 
+            body.append('search', search)
+            body.append('search_by', search_by)
+            body.append('folder', folder !== 'all' ? folder : '')
+            body.append('employee', employee !== 'all' ? employee : '')
+            body.append('template_type', template_type)
+            body.append('template', template !== 'all' ? template : '')
+            body.append('archive', archive)
+            body.append('status', status)
+            body.append('start_date', start_date)
+            body.append('end_date', end_date)   
+            body.append('order', order)
+            body.append('order_by', order_by)
+
+            setReportPrintLoad(true)
+            service.reportPrint(body, token).then(res => {
+                // window.open(res)
+                console.log(res)
+                printJS(res?.file_url)
+                
+            }).finally(() => {
+                setReportPrintLoad(false)
+            })
+        }
+    }
+
+    const onSendToEmail = () => {
+        if(token) {
+            const body = new FormData() 
+            body.append('search', search)
+            body.append('search_by', search_by)
+            body.append('folder', folder !== 'all' ? folder : '')
+            body.append('employee', employee !== 'all' ? employee : '')
+            body.append('template_type', template_type)
+            body.append('template', template !== 'all' ? template : '')
+            body.append('archive', archive)
+            body.append('status', status)
+            body.append('start_date', start_date)
+            body.append('end_date', end_date)   
+            body.append('order', order)
+            body.append('order_by', order_by)
+            body.append('email', email)
+            setReportMailLoad(true)
+            service.reportSendMail(body,token).then(res => {
+                console.log(res)
+                if(res?.error === false) {
+                    alert(`Отчет отправлен на вашу почту: ${email}`)
+                }
+            }).finally(() => {
+                setReportMailLoad(false)
+            })
+        }
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -379,12 +439,49 @@ const DocsPage = () => {
                             </Row>
                         </div>
                         <div className={styles.action}>
-                            <div className={styles.action_item}>
-                                <Button
-                                    text='Сформировать отчет'
-                                    isRound
-                                    />
-                            </div>
+                            {
+                                isReport ? (
+                                    <div className={styles.action_main}>
+                                        <div className={styles.action_main_btn}>
+                                            <Button
+                                                disabled={!email}
+                                                onClick={onSendToEmail}
+                                                load={reportMailLoad}
+                                                isRound
+                                                text='Отправить на Email'
+                                                style={{borderTopRightRadius: 11, borderBottomRightRadius: 11}}
+                                                />
+                                        </div>
+                                        <div className={styles.action_main_inp}>
+                                            <Input
+                                                value={email}
+                                                onChange={(e:React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                                                placeholder='Email'
+                                                type='email'
+                                                // style={{widthL}}
+                                                fill
+                                                />
+                                        </div>
+                                        <div className={styles.action_main_btn}>
+                                            <Button
+                                                isRound
+                                                onClick={onPrint}
+                                                load={reportPrintLoad}
+                                                text='Распечатать'
+                                                style={{borderTopLeftRadius: 11, borderBottomLeftRadius: 11}}
+                                                />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className={styles.action_item}>
+                                        <Button
+                                            onClick={() => setIsReport(true)}
+                                            text='Сформировать отчет'
+                                            isRound
+                                            />
+                                    </div>
+                                )
+                            }
                             
                         </div>
                     </div>
