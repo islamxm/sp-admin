@@ -13,7 +13,7 @@ import ArchPage from '../../pages/archPage/ArchPage';
 import AuthPage from '../../pages/authPage/AuthPage';
 import PrintersPage from '../../pages/printersPage/PrintersPage';
 import StationsPage from '../../pages/stationsPage/StationsPage';
-
+import TerminalsPage from '../../pages/terminalsPage/TerminalsPage';
 
 
 
@@ -34,6 +34,7 @@ const App:FC = () => {
                         <Route path='/employees' element={<PrivateRoute><EmpPage/></PrivateRoute>}/>
                         <Route path='/printers' element={<PrivateRoute><PrintersPage/></PrivateRoute>}/>
                         <Route path='/stations' element={<PrivateRoute><StationsPage/></PrivateRoute>}/>
+                        <Route path='/terminals' element={<PrivateRoute><TerminalsPage/></PrivateRoute>}/>
                     </Routes>
                 </Layout>
             </div>

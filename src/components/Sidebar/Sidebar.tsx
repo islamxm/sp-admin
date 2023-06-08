@@ -28,6 +28,10 @@ const menuList = [
         label: 'Станции',
         url: '/stations'
     },
+    {
+        label: 'Терминалы',
+        url: '/terminals'
+    },
     // {
     //     label: 'Отчеты',
     //     url: '/reports'

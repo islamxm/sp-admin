@@ -299,7 +299,7 @@ const DocsPage = () => {
                                     </Row>
                                 </Col>
                                 <Col span={24}>
-                                    <Row align={'middle'} gutter={[12,12]}>
+                                    <Row align={'bottom'} gutter={[12,12]}>
                                         <Col span={4}>
                                             <Select
                                                 label='Номер папки'
@@ -368,6 +368,7 @@ const DocsPage = () => {
                                         <Col span={4}>
                                             <span style={{marginRight: 10}}>Отозван</span>
                                             <Checkbox
+                                                style={{marginBottom: 8}}
                                                 id='status'
                                                 checked={status === '1'}
                                                 onChange={(e) => e.target.checked ? setstatus('1') : setstatus('0')}

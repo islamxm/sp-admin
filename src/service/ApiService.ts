@@ -528,6 +528,38 @@ class ApiService {
             console.log(err)
         }
     }
+
+    editTerminal = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.editTerminal, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    deleteTerminal = async (body: FormData, token: any) => {
+        try {
+            let res = await fetch(endpoints.deleteTerminal, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+                body
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 

@@ -67,6 +67,8 @@ const endpoints = {
 
     addSubcat: `${PATH}admin/templates/add_sub_category.php`,
 
+    editTerminal: `${PATH}admin/terminals/change_terminal.php`,
+    deleteTerminal: `${PATH}admin/terminals/delete_terminal.php`,
 
     
 }
