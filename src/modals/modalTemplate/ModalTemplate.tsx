@@ -13,7 +13,7 @@ import { useSearchParams } from 'react-router-dom';
 import getParams from '../../utils/getParams';
 import UploadDoc from '../../components/UploadDoc/UploadDoc';
 import ModalEmp from '../modalEmp/ModalEmp';
-import {Checkbox, Popover} from 'antd';
+import {Checkbox} from 'antd';
 
 
 const service = new ApiService()
@@ -56,8 +56,8 @@ const ModalTemplate:FC<I> = (props) => {
     const [archive_id, setarchive_id] = useState('')
     const [title, settitle] = useState('')
     const [inputs, setinputs] = useState<{id:string, keyword: string, name: string,data_type_id:string,required: string}[]>([])
-    const [employees, setemployees] = useState<{id: string, employee_id: string}[]>([])
-
+    const [employees, setemployees] = useState<{id: string, terminal_id: string}[]>([])
+    
 
 
 
@@ -73,44 +73,24 @@ const ModalTemplate:FC<I> = (props) => {
         onCancel && onCancel()
     }
 
-
-    const getArchs = () => {
+    const getListData = () => {
         if(token) {
-            service.getArchs(token).then(res => {
+            service.getDataTypes(token).then(res => {
+                console.log(res)
+                setDataTypes(res?.data_types?.map((i: any) => ({value: i.id, label: i.name})))
+                setPrintersList(res?.printers?.map((i: any) => ({value: i.id, label: i.name})))
+                setStationsList(res?.stations?.map((i: any) => ({value: i.id, label: i.title})))
+                setEmpsList(res?.terminals)
                 setArchives(res?.archives)
             })
         }
     }
 
-    const getStations = () => {
-        if(token) {
-            service.getStations(token).then(res => {
-                setStationsList(res?.stations?.map((i: any) => ({value: i.id, label: i.title})))
-            })
-        }
-    }
+    
 
-    const getPrinters = () => {
-        if(token) {
-            service.getPrinters(token).then(res => {
-                setPrintersList(res?.printers?.map((i: any) => ({value: i.id, label: i.name})))
-            })
-        }
-    }
-
-    const getDataTypes = () => {
-        if(token) {
-            service.getDataTypes(token).then(res => {
-                setDataTypes(res?.data_types?.map((i: any) => ({value: i.id, label: i.name})))
-            })
-        }
-    }
 
     useEffect(() => {
-        getArchs()
-        getDataTypes()
-        getStations()
-        getPrinters()
+        getListData()
     }, [token])
 
 
@@ -133,10 +113,9 @@ const ModalTemplate:FC<I> = (props) => {
                 const body = new FormData()
                 body.append('template_id', data?.id)
                 service.getTemp(body,token).then(res => {
-                    console.log(res)
                     if(res?.error === false) {
                         setarchive_id(res?.archieve_id)
-                        setemployees(res?.employees?.map((e: any) => ({id: '0', employee_id: e.id})))
+                        setemployees(res?.terminals?.map((e: any) => ({id: '0', terminal_id: e.id})))
                         setinputs(res?.inputs)
                         setprinter_id(res?.printer_id)
                         setstation_id(res?.station_id)
@@ -161,7 +140,7 @@ const ModalTemplate:FC<I> = (props) => {
                     archive_id,
                     title,
                     inputs,
-                    employees,
+                    terminals: employees,
                     station_id,
                     printer_id
                 }))
@@ -186,7 +165,7 @@ const ModalTemplate:FC<I> = (props) => {
                     archive_id,
                     title,
                     inputs,
-                    employees,
+                    terminals: employees,
                     station_id,
                     printer_id
                 }))
@@ -249,28 +228,28 @@ const ModalTemplate:FC<I> = (props) => {
     }
 
 
-    useEffect(() => {
-        if(token) {
-            service.getEmps(token).then(res => {
-                setEmpsList(res?.employees)
-            })
-        }
-    }, [token])
 
 
     const onEmpSelect = (id: string) => {
+        console.log(id)
+        console.log(empsList)
         const item = empsList.find(i => i.id === id)
-        const isHaveInCurrentList = employees.find(i => i.employee_id === id)
+        
+        console.log(item)
+        
+        const isHaveInCurrentList = employees.find(i => i.terminal_id === id)
+
+        console.log(isHaveInCurrentList)
 
         if(!isHaveInCurrentList) {
-            setemployees(s => [...s, {id: '0', employee_id: id}])
+            setemployees(s => [...s, {id: '0', terminal_id: id}])
         } 
     }
 
     const onEmpDelete = (id: string) => {
         setemployees(s => {
             const m = s;
-            const rm = m.splice(m.findIndex(d => d.employee_id === id), 1)
+            const rm = m.splice(m.findIndex(d => d.terminal_id === id), 1)
             return [...m]
         })
     }
@@ -288,7 +267,7 @@ const ModalTemplate:FC<I> = (props) => {
                 }}
                 onDelete={onEmpDelete}
                 selectEmp={onEmpSelect}
-                list={empsList?.map(i => ({value: i.id, label: i.name}))}
+                list={empsList?.map((i:any) => ({value: i.id, label: i.name}))}
                 data={selectedEmp}
                 />
             <Modal
@@ -445,7 +424,7 @@ const ModalTemplate:FC<I> = (props) => {
                                                 setEmpModal(true)
                                             }}
                                             onDelete={onEmpDelete}
-                                            data={empsList?.find(emp => emp.id === i.employee_id)}
+                                            data={empsList?.find(emp => emp.id === i.terminal_id)}
                                             />
                                     </Col>
                                 ))

@@ -66,5 +66,8 @@ const endpoints = {
 
 
     addSubcat: `${PATH}admin/templates/add_sub_category.php`,
+
+
+    
 }
 export default endpoints;
