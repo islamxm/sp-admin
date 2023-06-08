@@ -427,7 +427,7 @@ const ModalTemplate:FC<I> = (props) => {
                 
                 <Col span={24}>
                     <div className={styles.part}>
-                        <div className={styles.head}>Доступ сотрудников:</div>
+                        <div className={styles.head}>Доступные терминалы:</div>
                         <Row gutter={[10,10]} justify={'center'}>
                             <Col span={20}>
                                 <button 

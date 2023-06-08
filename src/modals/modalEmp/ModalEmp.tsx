@@ -45,7 +45,7 @@ const ModalEmp:FC<I> = (props) => {
             footer={false}
             onCancel={onClose}
             >
-            <div className='modal-title'>Выбор сотрудника</div>
+            <div className='modal-title'>Выбор терминала</div>
             <Row gutter={[25,25]}>
                 
                 <Col span={24}>

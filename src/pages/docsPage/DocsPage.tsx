@@ -45,11 +45,11 @@ const tableHead = [
     },
     {
         label: 'Сотрудник',
-        value: 'name'
+        value: 'employee'
     },
     {
         label: 'Субъект', //фИО ГОСТЯ
-        value: 'employee'
+        value: 'name'
     },
     {
         label: 'Дата',
