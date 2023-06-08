@@ -253,6 +253,7 @@ const DocsPage = () => {
         
     }
 
+    useEffect(() => console.log(end_date), [end_date])
 
     return (
         <div className={styles.wrapper}>
@@ -335,24 +336,33 @@ const DocsPage = () => {
                                                 />
                                         </Col>
                                         <Col span={4}>
-                                            {/* <Select
-                                                label='Дата от'
-                                                placeholder="Дата от"
-                                                /> */}
                                             <DatePicker
                                                 placeholder='Выбрать дату'
                                                 fieldLabel='Дата от'
                                                 style={{width: '100%'}}
-                                                onChange={e => setstart_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
-                                                
+                                                onChange={e => {
+                                                    if(e) {
+                                                        setstart_date(moment(e?.toDate()).format('YYYY-MM-DD'))
+                                                    } else {
+                                                        setstart_date('')
+                                                    }
+                                                    
+                                                }}
                                                 />
                                         </Col>
                                         <Col span={4}>
                                             <DatePicker
                                                 style={{width: '100%'}}
-                                                fieldLabel='Выбрать дату'
-                                                placeholder='Дата до'
-                                                onChange={e => setend_date(moment(e?.toDate()).format('YYYY-MM-DD'))}
+                                                fieldLabel='Дата до'
+                                                placeholder='Выбрать дату'
+                                                allowClear
+                                                onChange={e => {
+                                                    if(e) {
+                                                        setend_date(moment(e?.toDate()).format('YYYY-MM-DD'))
+                                                    } else {
+                                                        setend_date('')
+                                                    }
+                                                }}
                                                 />
                                         </Col>
                                         <Col span={4}>
