@@ -13,10 +13,11 @@ import IconButton from '../../components/IconButton/IconButton';
 import {IoCloseCircleOutline} from 'react-icons/io5';
 import {HiOutlinePrinter} from 'react-icons/hi';
 import {RiArrowGoBackFill} from 'react-icons/ri';
-import {FiDownload} from 'react-icons/fi'
+import {FiDownload, FiChevronDown} from 'react-icons/fi'
 import printJS from 'print-js';
 import IconLink from '../../components/IconLink/IconLink';
 import ModalConfirm from '../../modals/modalConfirm/ModalConfirm';
+import {Pagination} from 'antd'
 
 
 const service = new ApiService()
@@ -24,27 +25,39 @@ const service = new ApiService()
 const tableHead = [
     {
         label: 'ID',
+        value: 'id'
     },
     {
-        label: 'Архив'
+        label: 'Архив',
+        value: 'archive'
     },
     {
-        label: 'Папка'
+        label: 'Папка',
+        value: 'folder'
     },
     {
-        label: 'Документ'
+        label: 'Номер в папке',
+        value: 'id_in_folder'
     },
     {
-        label: 'Сотрудник'
+        label: 'Документ',
+        value: 'title'
     },
     {
-        label: 'Субъект' //фИО ГОСТЯ
+        label: 'Сотрудник',
+        value: 'name'
     },
     {
-        label: 'Дата'
+        label: 'Субъект', //фИО ГОСТЯ
+        value: 'employee'
     },
     {
-        label: 'Статус'
+        label: 'Дата',
+        value: 'date'
+    },
+    {
+        label: 'Статус',
+        value: 'status'
     },
     {
         label: 'Действие'
@@ -91,6 +104,12 @@ const DocsPage = () => {
 
     const [selectedDoc, setSelectedDoc] = useState<{docId: string, statusId: string}>({docId: '', statusId: ''})
 
+    const [offset, setoffset] = useState(0)
+    const [limit, setlimit] = useState(20)
+    const [order, setorder] = useState<'ASC' | 'DESC'>('ASC')
+    const [order_by, setorder_by] = useState('id')
+    const [total, settotal] = useState(0)
+
     // useEffect(() => {
 
     // }, [l])
@@ -118,10 +137,15 @@ const DocsPage = () => {
             body.append('archive', archive)
             body.append('status', status)
             body.append('start_date', start_date)
-            body.append('end_date', end_date)            
+            body.append('end_date', end_date)   
+            body.append('order', order)
+            body.append('order_by', order_by)
+            body.append('limit', limit.toString())
+            body.append('offset', offset.toString())         
 
             service.getDocs(body, token).then(res => {
                 setList(res?.documents)
+                settotal(res?.total_count)
                 setFolderList(
                     [
                         {value: 'all', label: 'Все'},
@@ -147,7 +171,7 @@ const DocsPage = () => {
 
     useEffect(() => {
         onUpdate()
-    }, [token])
+    }, [token, order, offset, limit, order_by])
 
 
     const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -211,6 +235,17 @@ const DocsPage = () => {
                 setModalLoad(false)
             })
         }
+    }
+
+    const onOrder = (value?: string) => {
+        value && setorder_by(value)
+        setorder(s => {
+            if(s === 'ASC') {
+                return 'DESC'
+            } else {
+                return 'ASC'
+            }
+        })
     }
 
 
@@ -346,7 +381,18 @@ const DocsPage = () => {
                                     <tr className='table__row table__row-head'>
                                         {
                                             tableHead?.map((item,index) => (
-                                                <th className='table__item table__item-head'>{item.label}</th>
+                                                <th className='table__item table__item-head'>
+                                                    <div 
+                                                        onClick={() => {
+                                                            item?.value && onOrder(item.value)
+                                                        }}
+                                                        className={`table__item-head_label ${order_by === item?.value ? 'active' : ''} ${order === 'ASC' ? 'asc' : 'desc'}`}>
+                                                        {item.label}
+                                                        <div className="table__item-head_label_icon">
+                                                            <FiChevronDown/>
+                                                        </div>
+                                                    </div>
+                                                </th>
                                             ))
                                         }
                                     </tr>
@@ -356,6 +402,7 @@ const DocsPage = () => {
                                                 <td className="table__item">{i.id}</td>
                                                 <td className="table__item">{i.archive}</td>
                                                 <td className="table__item">{i.folder}</td>
+                                                <td className="table__item">{i.id_in_folder}</td>
                                                 <td className="table__item">{i.title}</td>
                                                 <td className="table__item">{i.employee}</td>
                                                 <td className="table__item">{i?.name ? i?.name : '-'}</td>
@@ -364,23 +411,6 @@ const DocsPage = () => {
                                                 <td className="table__item">
                                                     <div className={styles.table_action}>
                                                         <div className={styles.table_action_item}>
-                                                            {/* {
-                                                                i?.status === '1' && (
-                                                                    <IconButton
-                                                                        size={20}
-                                                                        onClick={() => onDocStatusChange(i.id, '2')} 
-                                                                        icon={<RiArrowGoBackFill size={20}/>}/>
-                                                                )
-                                                            }
-                                                            {
-                                                                i?.status === '2' && (
-                                                                    <IconButton 
-                                                                        size={20}
-                                                                        onClick={() => onDocStatusChange(i.id, '1')}
-                                                                        variant={'danger'} 
-                                                                        icon={<IoCloseCircleOutline size={20}/>}/>
-                                                                )
-                                                            } */}
                                                             <IconButton 
                                                                 size={20}
                                                                 onClick={() => {
@@ -393,16 +423,6 @@ const DocsPage = () => {
                                                                 }}
                                                                 variant={i?.status === '2' ? 'default' : 'danger'} 
                                                                 icon={i?.status === '2' ? <RiArrowGoBackFill size={20}/> : <IoCloseCircleOutline size={20}/>}/>
-                                                            {/* <div
-                                                                onClick={() => {
-                                                                    if(i?.status === '2') {
-                                                                        onDocStatusChange(i.id, '1')
-                                                                    } 
-                                                                    if(i?.status === '1') {
-                                                                        onDocStatusChange(i.id, '2')
-                                                                    }
-                                                                }}
-                                                                >{i.status}</div> */}
                                                         </div>
                                                         <div className={styles.table_action_item}>
                                                             <IconButton
@@ -435,6 +455,22 @@ const DocsPage = () => {
                             )
                         }
                         
+                    </div>
+                </Col>
+                <Col span={24}>
+                    <div className={styles.pag}>
+                        <Pagination
+                            pageSize={limit}
+                            total={total}
+                            current={(offset / limit) + 1}
+                            onChange={e => {
+                                if(e == 1) {
+                                    setoffset(0)
+                                } else {
+                                    setoffset((Number(e) - 1) * limit)
+                                }
+                            }}
+                            />
                     </div>
                 </Col>
             </Row>
