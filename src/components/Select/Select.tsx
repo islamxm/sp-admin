@@ -19,6 +19,7 @@ const Select = (props:ISelect) => {
                     {...props} 
                     searchValue={searchVal} 
                     showSearch 
+                    
                     onSearch={setSearchVal}
                     filterOption={(input,option) => 
                         typeof option?.label === 'string' && (option?.label ?? '').toLowerCase().includes(input.toLowerCase())

@@ -35,7 +35,7 @@ const ModalEmp:FC<I> = (props) => {
     }, [data])
 
     
-
+    
 
 
     return (
@@ -54,6 +54,12 @@ const ModalEmp:FC<I> = (props) => {
                         onChange={setSelected} 
                         placeholder='Выбор'
                         options={list}
+                        onFocus={() => {
+                            const inputs = document?.querySelectorAll('input')
+                            inputs.forEach(input => {
+                                input.setAttribute('autocomplete', 'off')
+                            })
+                        }}
                         />
                 </Col>
                 <Col span={24}>
