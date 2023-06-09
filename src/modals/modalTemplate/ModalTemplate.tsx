@@ -81,7 +81,9 @@ const ModalTemplate:FC<I> = (props) => {
                 setPrintersList(res?.printers?.map((i: any) => ({value: i.id, label: i.name})))
                 setStationsList(res?.stations?.map((i: any) => ({value: i.id, label: i.title})))
                 setEmpsList(res?.terminals)
-                setArchives(res?.archives)
+                setArchives(res?.archieves)
+
+                
             })
         }
     }
@@ -231,7 +233,7 @@ const ModalTemplate:FC<I> = (props) => {
 
 
     const onEmpSelect = (id: string) => {
-        console.log(id)
+
         console.log(empsList)
         const item = empsList.find(i => i.id === id)
         
