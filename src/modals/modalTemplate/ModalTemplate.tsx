@@ -122,7 +122,6 @@ const ModalTemplate:FC<I> = (props) => {
                         setprinter_id(res?.printer_id)
                         setstation_id(res?.station_id)
                         settitle(res?.title)
-
                     }
                 })
             }
