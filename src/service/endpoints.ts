@@ -1,4 +1,4 @@
-const PATH = 'http://srv-app-consent.sochi-park.ru'
+const PATH = 'http://srv-app-consent.sochi-park.ru/'
 
 const endpoints = {
 
