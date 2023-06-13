@@ -1,4 +1,4 @@
-const PATH = 'http://srv-app-consent.sochi-park.ru/'
+const PATH = 'http://srv-app-consent.sochi-park.ru/sochi_park/api/'
 
 const endpoints = {
 
@@ -71,7 +71,9 @@ const endpoints = {
     deleteTerminal: `${PATH}admin/terminals/delete_terminal.php`,
 
     reportSendMail: `${PATH}admin/send_report_email.php`,
-    reportPrint: `${PATH}admin/print_report.php`
+    reportPrint: `${PATH}admin/print_report.php`,
+
+    sync: `${PATH}admin/sync_employees.php`,
 
     
 }

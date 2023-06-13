@@ -592,6 +592,21 @@ class ApiService {
             console.log(err)
         }
     }
+
+    sync = async (token: any) => {
+        try {
+            let res = await fetch(endpoints.sync, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token
+                },
+            })
+            const r = await res?.json()
+            return await checkAuth(r)
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 
